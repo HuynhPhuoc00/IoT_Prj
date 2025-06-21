@@ -1,3 +1,0 @@
-C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_prj02/Driver/Inc/Room.h:18:5:Room::Room(std::string)	1
-../Src/main.cpp:27:5:int main()	1
-C:\ST\STM32CubeIDE_1.18.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344\tools\arm-none-eabi\include\c++\13.3.1\bits\new_allocator.h:104:7:std::__new_allocator<_Tp>::~__new_allocator() [with _Tp = char]	1

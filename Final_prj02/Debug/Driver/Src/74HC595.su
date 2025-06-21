@@ -1,5 +1,0 @@
-../Driver/Src/74HC595.c:19:6:Clk_En	24	static
-../Driver/Src/74HC595.c:36:6:Write_data	24	static
-../Driver/Src/74HC595.c:58:6:Latch_En	24	static
-../Driver/Src/74HC595.c:83:12:Set_74HC595	32	static
-../Driver/Src/74HC595.c:112:6:init_74HC595	64	static

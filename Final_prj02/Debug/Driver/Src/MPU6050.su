@@ -1,4 +1,0 @@
-../Driver/Src/MPU6050.c:9:6:MPU_Read	24	static
-../Driver/Src/MPU6050.c:18:6:MPU_Write	16	static
-../Driver/Src/MPU6050.c:26:7:MPU_Init	32	static
-../Driver/Src/MPU6050.c:47:6:MPU6050_Read_Accel	32	static
