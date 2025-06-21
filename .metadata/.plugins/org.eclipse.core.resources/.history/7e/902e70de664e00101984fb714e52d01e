@@ -1,0 +1,143 @@
+/*
+ * lcd.c
+ *
+ *  Created on: Jun 20, 2025
+ *      Author: Administrator
+ */
+
+#include "lcd.h"
+
+#define lcd4_bit
+
+GPIO_Handle_t PE9;
+GPIO_Handle_t PE10;
+
+void Config_GPIO_LCD(){
+	GPIOE_PCLK_EN;
+	PE9.pGPIOx = GPIOE;
+	PE9.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_9;
+	PE9.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	PE9.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	PE9.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
+	PE9.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	GPIO_Init(&PE9);
+
+	PE10.pGPIOx = GPIOE;
+	PE10.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_10;
+	PE10.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	PE10.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	PE10.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
+	PE10.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	GPIO_Init(&PE10);
+}
+
+void lcd_init(){
+#ifdef lcd4_bit
+	Config_GPIO_LCD()
+    HAL_Delay(10); send_cmd_lcd (0x2);  // 4bit mode
+	HAL_Delay(10); send_cmd_lcd (0x28); // Function set --> DL=0 (4 bit mode), N = 1 (2 line display) F = 0 (5x8 characters)
+	HAL_Delay(1);
+#else
+	send_cmd_lcd (0x38); // Function set --> DL=0 (4 bit mode), N = 1 (2 line display) F = 0 (5x8 characters)
+	HAL_Delay(1);
+#endif
+
+	send_cmd_lcd(0x0C); HAL_Delay(1);
+	send_cmd_lcd(0x01); HAL_Delay(2);
+	send_cmd_lcd(0x06); HAL_Delay(1);
+
+	HAL_Delay(200);
+	lcd_put_cur(0,0);
+	send_string_lcd("Init LCD successfull"); // Test
+	lcd_put_cur(1,0);
+	send_string_lcd("Init LCD successfull"); // Test
+	lcd_put_cur(2,0);
+	send_string_lcd("Init LCD successfull"); // Test
+	lcd_put_cur(3,0);
+	send_string_lcd("Init LCD successfull"); // Test
+	HAL_Delay(5000);
+	lcd_clear();
+}
+
+void write_data_lcd(char data){
+	Write_data((uint8_t)data, DS3, LSB);
+	GPIO_WriteToOutPutPin(PE10.pGPIOx, 10, High); HAL_Delay(1);
+	GPIO_WriteToOutPutPin(PE10.pGPIOx, 10, Low); HAL_Delay(1);
+}
+
+void send_cmd_init(char data){
+	GPIO_WriteToOutPutPin(PE9.pGPIOx, 9, Low); // Set RS low to write cmd
+
+#ifdef lcd4_bit
+	char tmp;
+	tmp = (data >> 4) & 0x0F;
+	write_data_lcd(tmp);
+
+	tmp = data & 0x0F;
+	write_data_lcd(tmp);
+#else
+	write_data_lcd(data);
+#endif	// LCD_4bit
+}
+
+void send_cmd_lcd(char data){
+	GPIO_WriteToOutPutPin(PE9.pGPIOx, 9, Low); // Set RS low to write cmd
+
+#ifdef lcd4_bit
+	char tmp;
+	tmp = (data >> 4) & 0x0F;
+	write_data_lcd(tmp);
+
+	tmp = data & 0x0F;
+	write_data_lcd(tmp);
+#else
+	write_data_lcd(data);
+#endif	// LCD_4bit
+}
+
+void send_data_lcd(char data){
+	GPIO_WriteToOutPutPin(PE9.pGPIOx, 9, High); // Set RS high to write data
+
+#ifdef lcd4_bit
+    char tmp;
+	tmp = (data >> 4) & 0x0F;
+	write_data_lcd(tmp);
+
+	tmp = data & 0x0F;
+	write_data_lcd(tmp);
+#else
+	write_data_lcd(data);
+#endif	// lcd4_bit
+
+}
+
+void send_string_lcd(char *data){
+	while (*data){
+		send_data_lcd(*data++);
+		HAL_Delay(2);
+	}
+}
+
+void lcd_clear(){
+	send_cmd_lcd(0x01); HAL_Delay(2);
+}
+
+void lcd_put_cur(int row, int col){
+    switch (row){
+        case 0:
+            col |= 0x80;
+            break;
+        case 1:
+            col |= 0xC0;
+            break;
+        case 2:
+            col |= 0x94;
+            break;
+        case 3:
+            col |= 0xD4;
+            break;
+    }
+
+    send_cmd_lcd (col);
+}
+

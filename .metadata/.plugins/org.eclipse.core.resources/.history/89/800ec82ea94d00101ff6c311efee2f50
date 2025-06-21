@@ -1,0 +1,6 @@
+Core/Inc/USART.o: ../Core/Inc/USART.c ../Core/Inc/USART.h \
+ ../Core/Inc/stm32f411.h ../Core/Inc/GPIO_user.h ../Core/Inc/SPI.h
+../Core/Inc/USART.h:
+../Core/Inc/stm32f411.h:
+../Core/Inc/GPIO_user.h:
+../Core/Inc/SPI.h:

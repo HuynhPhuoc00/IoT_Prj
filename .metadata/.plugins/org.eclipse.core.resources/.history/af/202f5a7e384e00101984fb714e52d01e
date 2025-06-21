@@ -1,0 +1,31 @@
+/*
+ * lcd2004.h
+ *
+ *  Created on: Jun 20, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_LCD2004_H_
+#define SRC_LCD2004_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "stm32f411.h"
+#include "74HC595.h"
+extern GPIO_Handle_t PE9;
+extern GPIO_Handle_t PE10;
+
+void Config_GPIO_LCD();
+void lcd_init();
+void write_data_lcd(char data);
+void send_cmd_lcd(char data);
+void send_data_lcd(char data);
+void send_string_lcd(char *data);
+void lcd_put_cur(int row, int col);
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* SRC_LCD2004_H_ */

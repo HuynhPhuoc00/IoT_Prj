@@ -1,0 +1,303 @@
+/*
+ * stm32f411_I2C.c
+ *
+ *  Created on: Jul 6, 2023
+ *      Author: HuynhPhuoc
+ */
+
+#include "stm32f411.h"
+#include "I2C_u.h"
+
+/*
+    SCL
+    T-high = CCR*Tpclk1 
+    T-low = CCR*Tpclk1 
+
+    pclk1 = (SystemClk/ahbp) / apb1;
+*/
+
+static void I2C_GenrateStartCondition(I2C_RegDef_t *pI2Cx);
+static void I2C_ClearAddrFlag(I2C_RegDef_t *pI2Cx);
+static void I2C_GenrateStopCondition(I2C_RegDef_t *pI2Cx);
+static void Config_GPIO_I2C();
+
+static void I2C_GenrateStartCondition(I2C_RegDef_t *pI2Cx){
+	pI2Cx->CR1 |= (1<<10);
+    pI2Cx->CR1 |= (1<<8);
+}
+
+static void I2C_ClearAddrFlag(I2C_RegDef_t *pI2Cx){
+    uint32_t dummyRead = pI2Cx->SR1;
+    dummyRead = pI2Cx->SR2;
+    (void)dummyRead;
+}
+
+static void I2C_GenrateStopCondition(I2C_RegDef_t *pI2Cx){
+    pI2Cx->CR1 |= (1<<9);
+}
+
+GPIO_Handle_t	PB0;
+GPIO_Handle_t	PB1;
+GPIO_Handle_t	PB2;
+
+void SetPinTest(GPIO_Handle_t *PBx, uint8_t GPIO_PIN_NUM_x){
+	// GPIO for test Flag
+	PBx->pGPIOx = GPIOB;
+	PBx->GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_x;
+	PBx->GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	PBx->GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	PBx->GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
+	PBx->GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	GPIO_Init(PBx);
+}
+
+
+// Enable GPIO for I2C
+static void Config_GPIO_I2C(){
+
+	// Enable port PB8
+	GPIO_Handle_t PB8;	// SCL
+	PB8.pGPIOx = GPIOB;
+	PB8.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_8;
+	PB8.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_ALTFM;
+	PB8.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_OD;
+	PB8.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_VERYHIGH;
+	PB8.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	PB8.GPIO_Pin_Config.GPIO_PinAltFunMode_High = GPIO_AFRH_AF4;
+	GPIO_Init(&PB8);
+
+	// Enable port PB9
+	GPIO_Handle_t PB9;	// SDA
+	PB9.pGPIOx = GPIOB;
+	PB9.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_9;
+	PB9.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_ALTFM;
+	PB9.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_OD;
+	PB9.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_VERYHIGH;
+	PB9.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	PB9.GPIO_Pin_Config.GPIO_PinAltFunMode_High = GPIO_AFRH_AF4;
+	GPIO_Init(&PB9);
+
+}
+
+
+// Peripheral Clock setup
+void I2C_PeriClockControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDis){
+    if(EnOrDis){
+        if(pI2Cx == I2C1)		I2C1_PLCK_EN;
+        else if(pI2Cx == I2C2)  I2C2_PLCK_EN;
+        else if(pI2Cx == I2C3)  I2C3_PLCK_EN;
+    }
+    else{
+        if(pI2Cx == I2C1)       I2C1_PLCK_DIS;
+        else if(pI2Cx == I2C2)  I2C2_PLCK_DIS;
+        else if(pI2Cx == I2C3)  I2C3_PLCK_DIS;
+    }
+}
+
+// Init and DeInit
+void I2C_Init(I2C_Handle_t *pI2CHandle){
+	lcd_init();
+	// Enable clock for I2C
+	I2C_PeriClockControl(pI2CHandle->pI2Cx, Enable);
+	// Config GPIO
+	GPIOB_PCLK_EN;
+	Config_GPIO_I2C();
+	SetPinTest(&PB0, 0);
+	SetPinTest(&PB1, 1);
+	SetPinTest(&PB2, 2);
+	// Software reset
+	pI2CHandle->pI2Cx->CR1 |= (1<<15);
+	pI2CHandle->pI2Cx->CR1 &= ~(1<<15);
+
+
+	uint32_t temp;
+    // Configure the FREQ of CR2
+    temp = 0;
+    temp |= RCC_GetPCLK1Value() / 1000000U;
+    pI2CHandle->pI2Cx->CR2 = (temp & 0x3F);
+
+    //CCR calculations
+    uint16_t ccr_value = 0;
+    temp = 0;
+    if(pI2CHandle->I2C_Congif.I2C_SCLSpeed <= I2C_SCL_SPEED_SM){	// For normal mode
+        // Mode is standard mode
+        ccr_value = (RCC_GetPCLK1Value() / (2 * pI2CHandle->I2C_Congif.I2C_SCLSpeed));
+        temp |= (ccr_value & 0xFFF);
+    }
+    else{
+        // Mode is fast mode 
+        temp |= (1 << 15);
+        temp |= (pI2CHandle->I2C_Congif.I2C_FMDutyCyCle << 14);
+        if(pI2CHandle->I2C_Congif.I2C_FMDutyCyCle == I2C_FMDUTY_2){
+            ccr_value = (RCC_GetPCLK1Value() / (3 * pI2CHandle->I2C_Congif.I2C_SCLSpeed));
+        }
+        else{
+            ccr_value = (RCC_GetPCLK1Value() / (25 * pI2CHandle->I2C_Congif.I2C_SCLSpeed));
+        }
+        temp |= (ccr_value & 0xFFF);
+    }
+
+    pI2CHandle->pI2Cx->CCR |= temp;
+
+    //TRISE calculations
+    uint16_t trise_value = 0;
+    temp = 0;
+    if(pI2CHandle->I2C_Congif.I2C_SCLSpeed <= I2C_SCL_SPEED_SM){	// Mode is standard mode
+    	trise_value = (RCC_GetPCLK1Value() / pI2CHandle->I2C_Congif.I2C_SCLSpeed) + 1;
+    }
+    else{	// Mode is fast mode
+//        temp |= (1 << 15);
+//        temp |= (pI2CHandle->I2C_Congif_t.I2C_FMDutyCyCle << 14);
+//        if(pI2CHandle->I2C_Congif_t.I2C_FMDutyCyCle == I2C_FMDUTY_2){
+//            ccr_value = (RCC_GetPCLK1Value() / (3 * pI2CHandle->I2C_Congif_t.I2C_SCLSpeed));
+//        }
+//        else{
+//            ccr_value = (RCC_GetPCLK1Value() / (25 * pI2CHandle->I2C_Congif_t.I2C_SCLSpeed));
+//        }
+//        temp |= (ccr_value & 0xFFF);
+    }
+
+    temp |= (trise_value & 0x7F);
+    pI2CHandle->pI2Cx->TRISE = temp;
+
+    // Enable I2C
+    pI2CHandle->pI2Cx->CR1 |= (1<<0);
+}
+
+uint8_t I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx,uint32_t FlagName){
+    if(pI2Cx->SR1 & FlagName){
+        return Flag_Set;
+    }
+    return Flag_Reset;
+}
+
+void I2C_Start(I2C_RegDef_t *pI2Cx){
+    // 1. Genarate the Start condition
+    I2C_GenrateStartCondition(pI2Cx);
+    // 2. Confirm that start generation is completed by checking the SB flag in the SR1
+    // Note: Until SB is cleared SCL will be stretched (pulled to LOW)
+    while(!(I2C_GetFlagStatus(pI2Cx,I2C_FLAG_SB)));
+}
+
+void I2C_Address(I2C_Handle_t *I2C_Handle){
+	// 3. Send the addr of the slave with r/w bit set to w(0) (total 8 bit)
+	I2C_Handle->pI2Cx->DR = I2C_Handle->I2C_Congif.I2C_DeviceAddr << 1;
+	// 4. Confirm that addr phase is completed by checking the Addr flas in SR1
+	uint32_t TimeOut = I2C_Handle->I2C_Congif.TimeOut;
+	while(!(I2C_GetFlagStatus(I2C_Handle->pI2Cx,I2C_FLAG_ADDR))){
+		HAL_Delay(10);
+		TimeOut -= 10;
+		if (TimeOut == 0){
+			lcd_put_cur(0, 1);
+			send_string_lcd("TimeOutAddr");
+		}
+	}
+	// 5. Clear the Addr flag according to its software sequence
+	// Note: Until Addr is cleared SCL will be strectched (pulled to LOW)
+	I2C_ClearAddrFlag(I2C_Handle->pI2Cx);
+}
+
+void I2C_MasterSend_Data(I2C_RegDef_t *pI2Cx, uint8_t data){
+    // When Len becomes zero wait for TxE=1 and BTF=1 before generating the STOP condition
+    // Note: TxE=1, BTF=1, means that both SR and DR are empty and next tranmission should begin
+    // when BTF=1 SCL will be stretched  (pulled to LOW)
+	while(!(I2C_GetFlagStatus(pI2Cx,I2C_FLAG_TxE)));
+    pI2Cx->DR = data;
+    while(!(I2C_GetFlagStatus(pI2Cx,I2C_FLAG_BTF)));
+
+}
+
+void I2C_MasterSend_Multi_Data(I2C_Handle_t *I2C_Handle, uint8_t *pTxbuffer, uint32_t len){
+	I2C_Start(I2C_Handle->pI2Cx);
+	I2C_Address(I2C_Handle);
+	uint32_t TimeOut_TxE = I2C_Handle->I2C_Congif.TimeOut;
+	uint32_t TimeOut_BTF = I2C_Handle->I2C_Congif.TimeOut;
+    // 6. Send the data until Len becomes 0
+    while(len > 0){
+        while(!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_TxE))) // Wait till TxE is set
+        {
+        	HAL_Delay(10);
+        	TimeOut_TxE -= 10;
+			if (TimeOut_TxE == 0){
+				lcd_put_cur(0, 1);
+				send_string_lcd("TimeOutAddr");
+			}
+        }
+        I2C_Handle->pI2Cx->DR = (uint8_t)*pTxbuffer;
+        HAL_Delay(1);
+        pTxbuffer++;
+        len--;
+    }
+    I2C_Stop(I2C_Handle->pI2Cx);
+    // 7. When Len becomes zero wait for TxE=1 and BTF=1 before generating the STOP condition
+    // Note: TxE=1, BTF=1, means that both SR and DR are empty and next tranmission should begin 
+    // when BTF=1 SCL will be stretched  (pulled to LOW)
+
+    while(!(I2C_GetFlagStatus(I2C_Handle->pI2Cx,I2C_FLAG_BTF))){
+    	HAL_Delay(10);
+    	TimeOut_BTF -= 10;
+		if (TimeOut_BTF == 0){
+			GPIO_WriteToOutPutPin(PB2.pGPIOx, GPIO_PIN_NUM_2, High);
+		}
+    }
+
+}
+
+void I2C_MasterRead_Data(I2C_RegDef_t *pI2Cx, uint8_t Address, uint8_t *buffer,uint8_t size){
+	int remaining = size;
+	if (size == 1){
+		// Write the slave Address, and wait for the ADDR bit (bit 1 in SR1) to be set
+		pI2Cx->DR = (Address << 1) + 0x1;
+		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_ADDR)));
+
+		// Clear the ADDR bit by reading the SR1 and SR2 Registers
+		pI2Cx->CR1 &= ~(1 << 10);
+		I2C_ClearAddrFlag(pI2Cx);
+		pI2Cx->CR1 &= ~(1 << 9); // Stop I2C
+
+		// Wait for the RXNE (Receive buffer not empty) bit to set
+		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_RxNE)));
+
+		// Read the data from the DR
+		*buffer = pI2Cx->DR;
+	}
+	else{
+		pI2Cx->DR = (Address << 1) + 0x1;
+		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_ADDR)));
+
+		// Clear the ADDR bit by reading the SR1 and SR2 Registers
+		I2C_ClearAddrFlag(pI2Cx);
+
+		while(remaining > 2){
+			// Wait for the RXNE (Receive buffer not empty) bit to set
+			while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_RxNE)));
+			buffer[size-remaining] = pI2Cx->DR;
+			pI2Cx->CR1 |= (1 << 10);
+			remaining--;
+		}
+
+		// Read the SECOND LAST BYTE
+		// Wait for the RXNE (Receive buffer not empty) bit to set
+		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_RxNE)));
+
+		I2C1->CR1 &= ~(1<<10);  // clear the ACK bit
+
+		I2C1->CR1 |= (1<<9);  // Stop I2C
+
+		remaining--;
+
+		// Read the Last BYTE
+		// Wait for the RXNE (Receive buffer not empty) bit to set
+		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_RxNE)));
+		buffer[size-remaining] = pI2Cx->DR;  // copy the data into the buffer
+	}
+}
+
+void I2C_Stop(I2C_RegDef_t *pI2Cx){
+	// 8. Genarate the Stop condition and Master need not to wait for the completion of stop condition
+	// Note: generating STOP, automatically clears the BTF
+	I2C_GenrateStopCondition(pI2Cx);
+}
+
+
+

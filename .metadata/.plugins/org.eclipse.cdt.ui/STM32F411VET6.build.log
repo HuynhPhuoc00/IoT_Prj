@@ -1,0 +1,130 @@
+11:50:25 **** Build of configuration Debug for project STM32F411VET6 ****
+make -j4 all 
+arm-none-eabi-g++ "../Src/syscalls.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32F411VETx -DSTM32 -DSTM32F4 -DSTM32F411E_DISCO -c -I../Inc -I"C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/syscalls.d" -MT"Src/syscalls.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/syscalls.o"
+arm-none-eabi-g++ "../Driver/Src/74HC595.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32F411VETx -DSTM32 -DSTM32F4 -DSTM32F411E_DISCO -c -I../Inc -I"C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Driver/Src/74HC595.d" -MT"Driver/Src/74HC595.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Driver/Src/74HC595.o"
+arm-none-eabi-g++ "../Driver/Src/Delay.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32F411VETx -DSTM32 -DSTM32F4 -DSTM32F411E_DISCO -c -I../Inc -I"C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Driver/Src/Delay.d" -MT"Driver/Src/Delay.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Driver/Src/Delay.o"
+arm-none-eabi-g++ "../Driver/Src/GPIO.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32F411VETx -DSTM32 -DSTM32F4 -DSTM32F411E_DISCO -c -I../Inc -I"C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Driver/Src/GPIO.d" -MT"Driver/Src/GPIO.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Driver/Src/GPIO.o"
+cc1plus.exe: warning: command-line option '-std=gnu11' is valid for C/ObjC but not for C++
+cc1plus.exe: warning: command-line option '-std=gnu11' is valid for C/ObjC but not for C++
+cc1plus.exe: warning: command-line option '-std=gnu11' is valid for C/ObjC but not for C++
+cc1plus.exe: warning: command-line option '-std=gnu11' is valid for C/ObjC but not for C++
+In file included from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/stm32f411.h:134,
+                 from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/Delay.h:11,
+                 from ../Driver/Src/Delay.c:8:
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/GPIO.h:27:23: error: declaration of 'GPIO_Pin_Config_t <unnamed struct>::GPIO_Pin_Config_t' changes meaning of 'GPIO_Pin_Config_t' [-Wchanges-meaning]
+   27 |     GPIO_Pin_Config_t GPIO_Pin_Config_t;
+      |                       ^~~~~~~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/GPIO.h:27:5: note: used here to mean 'typedef struct GPIO_Pin_Config_t GPIO_Pin_Config_t'
+   27 |     GPIO_Pin_Config_t GPIO_Pin_Config_t;
+      |     ^~~~~~~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/GPIO.h:23:2: note: declared here
+   23 | }GPIO_Pin_Config_t;
+      |  ^~~~~~~~~~~~~~~~~
+In file included from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/stm32f411.h:135:
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/I2C.h:105:18: error: declaration of 'I2C_Congif_t <unnamed struct>::I2C_Congif_t' changes meaning of 'I2C_Congif_t' [-Wchanges-meaning]
+  105 |     I2C_Congif_t I2C_Congif_t;
+      |                  ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/I2C.h:105:5: note: used here to mean 'typedef struct I2C_Congif_t I2C_Congif_t'
+  105 |     I2C_Congif_t I2C_Congif_t;
+      |     ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/I2C.h:100:2: note: declared here
+  100 | }I2C_Congif_t;
+      |  ^~~~~~~~~~~~
+In file included from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/stm32f411.h:137:
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/SPI.h:31:22: error: declaration of 'SPI_Congif_t <unnamed struct>::SPI_Congif_t' changes meaning of 'SPI_Congif_t' [-Wchanges-meaning]
+   31 |         SPI_Congif_t SPI_Congif_t;
+      |                      ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/SPI.h:31:9: note: used here to mean 'typedef struct SPI_Congif_t SPI_Congif_t'
+   31 |         SPI_Congif_t SPI_Congif_t;
+      |         ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/SPI.h:14:2: note: declared here
+   14 | }SPI_Congif_t;
+      |  ^~~~~~~~~~~~
+In file included from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/stm32f411.h:134,
+                 from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/74HC595.h:11,
+                 from ../Driver/Src/74HC595.c:8:
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/GPIO.h:27:23: error: declaration of 'GPIO_Pin_Config_t <unnamed struct>::GPIO_Pin_Config_t' changes meaning of 'GPIO_Pin_Config_t' [-Wchanges-meaning]
+   27 |     GPIO_Pin_Config_t GPIO_Pin_Config_t;
+      |                       ^~~~~~~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/GPIO.h:27:5: note: used here to mean 'typedef struct GPIO_Pin_Config_t GPIO_Pin_Config_t'
+   27 |     GPIO_Pin_Config_t GPIO_Pin_Config_t;
+      |     ^~~~~~~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/GPIO.h:23:2: note: declared here
+   23 | }GPIO_Pin_Config_t;
+      |  ^~~~~~~~~~~~~~~~~
+In file included from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/stm32f411.h:135:
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/I2C.h:105:18: error: declaration of 'I2C_Congif_t <unnamed struct>::I2C_Congif_t' changes meaning of 'I2C_Congif_t' [-Wchanges-meaning]
+  105 |     I2C_Congif_t I2C_Congif_t;
+      |                  ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/I2C.h:105:5: note: used here to mean 'typedef struct I2C_Congif_t I2C_Congif_t'
+  105 |     I2C_Congif_t I2C_Congif_t;
+      |     ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/I2C.h:100:2: note: declared here
+  100 | }I2C_Congif_t;
+      |  ^~~~~~~~~~~~
+In file included from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/stm32f411.h:137:
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/SPI.h:31:22: error: declaration of 'SPI_Congif_t <unnamed struct>::SPI_Congif_t' changes meaning of 'SPI_Congif_t' [-Wchanges-meaning]
+   31 |         SPI_Congif_t SPI_Congif_t;
+      |                      ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/SPI.h:31:9: note: used here to mean 'typedef struct SPI_Congif_t SPI_Congif_t'
+   31 |         SPI_Congif_t SPI_Congif_t;
+      |         ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/SPI.h:14:2: note: declared here
+   14 | }SPI_Congif_t;
+      |  ^~~~~~~~~~~~
+make: *** [Driver/Src/subdir.mk:46: Driver/Src/Delay.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [Driver/Src/subdir.mk:46: Driver/Src/74HC595.o] Error 1
+In file included from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/stm32f411.h:134,
+                 from ../Driver/Src/GPIO.c:8:
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/GPIO.h:27:23: error: declaration of 'GPIO_Pin_Config_t <unnamed struct>::GPIO_Pin_Config_t' changes meaning of 'GPIO_Pin_Config_t' [-Wchanges-meaning]
+   27 |     GPIO_Pin_Config_t GPIO_Pin_Config_t;
+      |                       ^~~~~~~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/GPIO.h:27:5: note: used here to mean 'typedef struct GPIO_Pin_Config_t GPIO_Pin_Config_t'
+   27 |     GPIO_Pin_Config_t GPIO_Pin_Config_t;
+      |     ^~~~~~~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/GPIO.h:23:2: note: declared here
+   23 | }GPIO_Pin_Config_t;
+      |  ^~~~~~~~~~~~~~~~~
+In file included from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/stm32f411.h:135:
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/I2C.h:105:18: error: declaration of 'I2C_Congif_t <unnamed struct>::I2C_Congif_t' changes meaning of 'I2C_Congif_t' [-Wchanges-meaning]
+  105 |     I2C_Congif_t I2C_Congif_t;
+      |                  ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/I2C.h:105:5: note: used here to mean 'typedef struct I2C_Congif_t I2C_Congif_t'
+  105 |     I2C_Congif_t I2C_Congif_t;
+      |     ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/I2C.h:100:2: note: declared here
+  100 | }I2C_Congif_t;
+      |  ^~~~~~~~~~~~
+In file included from C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/stm32f411.h:137:
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/SPI.h:31:22: error: declaration of 'SPI_Congif_t <unnamed struct>::SPI_Congif_t' changes meaning of 'SPI_Congif_t' [-Wchanges-meaning]
+   31 |         SPI_Congif_t SPI_Congif_t;
+      |                      ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/SPI.h:31:9: note: used here to mean 'typedef struct SPI_Congif_t SPI_Congif_t'
+   31 |         SPI_Congif_t SPI_Congif_t;
+      |         ^~~~~~~~~~~~
+C:/Users/Administrator/Documents/STM32F411VET6-DISCO/Driver/Inc/SPI.h:14:2: note: declared here
+   14 | }SPI_Congif_t;
+      |  ^~~~~~~~~~~~
+../Driver/Src/GPIO.c: In function 'void Pin_Mode(GPIO_Handle_t*, GPIO_RegDef_t*, uint8_t, uint8_t, uint8_t, uint8_t, uint8_t)':
+../Driver/Src/GPIO.c:132:19: error: cannot convert 'GPIO_RegDef_t**' to 'GPIO_Handle_t*'
+  132 |         GPIO_Init(&Device->pGPIOx);
+      |                   ^~~~~~~~~~~~~~~
+      |                   |
+      |                   GPIO_RegDef_t**
+../Driver/Src/GPIO.c:27:31: note:   initializing argument 1 of 'void GPIO_Init(GPIO_Handle_t*)'
+   27 | void GPIO_Init(GPIO_Handle_t *pGPIOHandel){
+      |                ~~~~~~~~~~~~~~~^~~~~~~~~~~
+make: *** [Driver/Src/subdir.mk:46: Driver/Src/GPIO.o] Error 1
+../Src/syscalls.c:155:28: error: expected ',' or '...' before 'new'
+  155 | int _link(char *old, char *new)
+      |                            ^~~
+../Src/syscalls.c: In function 'int _link(char*, char*)':
+../Src/syscalls.c:158:12: error: expected type-specifier before ';' token
+  158 |   (void)new;
+      |            ^
+make: *** [Src/subdir.mk:22: Src/syscalls.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+
+11:50:25 Build Failed. 17 errors, 0 warnings. (took 503ms)
+

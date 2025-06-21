@@ -1,0 +1,67 @@
+/*
+ * MPU6050.c
+ *
+ *  Created on: May 2, 2025
+ *      Author: Administrator
+ */
+#include "MPU6050.h"
+
+void MPU_Read(I2C_RegDef_t *pI2Cx, uint8_t Address, uint8_t Reg, uint8_t *buffer, uint8_t size){
+	I2C_Start(pI2Cx);
+	I2C_Address(pI2Cx, Address);
+	I2C_MasterSend_Data (pI2Cx, Reg);
+	I2C_Start(pI2Cx);
+	I2C_MasterRead_Data(pI2Cx, Address, buffer, size);
+	I2C_Stop (pI2Cx);
+}
+
+void MPU_Write(I2C_RegDef_t *pI2Cx, uint8_t Address, uint8_t Reg, uint8_t Data){
+	I2C_Start(pI2Cx);
+	I2C_Address(pI2Cx, Address);
+	I2C_MasterSend_Data(pI2Cx, Reg);
+	I2C_MasterSend_Data(pI2Cx, Data);
+	I2C_Stop(pI2Cx);
+}
+
+void  MPU_Init(I2C_RegDef_t *pI2Cx){
+	uint8_t check;
+	MPU_Read (pI2Cx, MPU6050_ADDR,WHO_AM_I_REG, &check, 1);
+	// Check I2C connected, return ID of chip (default 0x68)
+	if (check == 0x68){
+		// Control power. Bit 6 = reset, Bit 7 = sleep. Write 0x00 to enable chip.
+		MPU_Write(pI2Cx, MPU6050_ADDR, PWR_MGMT_1_REG, 0x0);
+		// Set DATA RATE of 1KHz by writing SMPLRT_DIV register
+		MPU_Write(pI2Cx, MPU6050_ADDR, SMPLRT_DIV_REG, 0x7);
+		// Set accelerometer configuration in ACCEL_CONFIG Register
+		// XA_ST=0,YA_ST=0,ZA_ST=0, FS_SEL=0 -> ? 2g
+		MPU_Write(pI2Cx, MPU6050_ADDR, ACCEL_CONFIG_REG, 0x0);
+	}
+}
+
+
+int16_t Accel_X_RAW = 0;
+int16_t Accel_Y_RAW = 0;
+int16_t Accel_Z_RAW = 0;
+float Ax, Ay, Az;
+
+void MPU6050_Read_Accel(I2C_RegDef_t *pI2Cx){
+
+	uint8_t Rx_data[6];
+
+	// Read 6 BYTES of data starting from ACCEL_XOUT_H register
+
+	MPU_Read (pI2Cx, MPU6050_ADDR, ACCEL_XOUT_H_REG, Rx_data, 6);
+
+	Accel_X_RAW = (int16_t)(Rx_data[0] << 8 | Rx_data [1]);
+	Accel_Y_RAW = (int16_t)(Rx_data[2] << 8 | Rx_data [3]);
+	Accel_Z_RAW = (int16_t)(Rx_data[4] << 8 | Rx_data [5]);
+
+	/*** convert the RAW values into acceleration in 'g'
+	     we have to divide according to the Full scale value set in FS_SEL
+	     I have configured FS_SEL = 0. So I am dividing by 16384.0
+	     for more details check ACCEL_CONFIG Register              ****/
+
+	Ax = Accel_X_RAW/16384.0;
+	Ay = Accel_Y_RAW/16384.0;
+	Az = Accel_Z_RAW/16384.0;
+}

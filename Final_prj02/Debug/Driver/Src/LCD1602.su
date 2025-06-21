@@ -1,0 +1,7 @@
+../Driver/Src/LCD1602.c:13:6:LCD_Config_I2C	8	static
+../Driver/Src/LCD1602.c:22:6:lcd_send_cmd	24	static
+../Driver/Src/LCD1602.c:35:6:lcd_send_data	24	static
+../Driver/Src/LCD1602.c:48:6:lcd_init	8	static
+../Driver/Src/LCD1602.c:66:6:lcd_send_string	16	static
+../Driver/Src/LCD1602.c:71:6:lcd_clear_display	8	static
+../Driver/Src/LCD1602.c:76:6:lcd_goto_XY	24	static

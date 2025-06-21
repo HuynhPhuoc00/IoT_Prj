@@ -1,0 +1,92 @@
+13:36:15 **** Incremental Build of configuration Debug for project Final_Prj ****
+make -j4 all 
+arm-none-eabi-g++ "../Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DSTM32F411VETx -DSTM32 -DSTM32F4 -c -I../Inc -I"C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Lib/Src/Delay.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32F411VETx -DSTM32 -DSTM32F4 -c -I../Inc -I"C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Lib/Src/Delay.d" -MT"Lib/Src/Delay.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Lib/Src/Delay.o"
+arm-none-eabi-gcc "../Lib/Src/GPIO.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32F411VETx -DSTM32 -DSTM32F4 -c -I../Inc -I"C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Lib/Src/GPIO.d" -MT"Lib/Src/GPIO.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Lib/Src/GPIO.o"
+arm-none-eabi-gcc "../Lib/Src/I2C.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32F411VETx -DSTM32 -DSTM32F4 -c -I../Inc -I"C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Lib/Src/I2C.d" -MT"Lib/Src/I2C.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Lib/Src/I2C.o"
+In file included from C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/stm32f411.h:132,
+                 from C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/Delay.h:11,
+                 from ../Lib/Src/Delay.c:8:
+C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/I2C.h:105:5: error: unknown type name 'I2C_Congif_t'
+  105 |     I2C_Congif_t I2C_Congif;
+      |     ^~~~~~~~~~~~
+../Src/main.cpp:23:4: warning: #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use." [-Wcpp]
+   23 |   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
+      |    ^~~~~~~
+In file included from C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/stm32f411.h:131,
+                 from ../Src/main.cpp:20:
+C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/GPIO.h:27:23: error: declaration of 'GPIO_Pin_Config_t <unnamed struct>::GPIO_Pin_Config_t' changes meaning of 'GPIO_Pin_Config_t' [-Wchanges-meaning]
+   27 |     GPIO_Pin_Config_t GPIO_Pin_Config_t;
+      |                       ^~~~~~~~~~~~~~~~~
+C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/GPIO.h:27:5: note: used here to mean 'typedef struct GPIO_Pin_Config_t GPIO_Pin_Config_t'
+   27 |     GPIO_Pin_Config_t GPIO_Pin_Config_t;
+      |     ^~~~~~~~~~~~~~~~~
+C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/GPIO.h:23:2: note: declared here
+   23 | }GPIO_Pin_Config_t;
+      |  ^~~~~~~~~~~~~~~~~
+In file included from C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/stm32f411.h:132:
+C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/I2C.h:105:5: error: 'I2C_Congif_t' does not name a type; did you mean 'I2C_Congif'?
+  105 |     I2C_Congif_t I2C_Congif;
+      |     ^~~~~~~~~~~~
+      |     I2C_Congif
+In file included from C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/stm32f411.h:132,
+                 from ../Lib/Src/I2C.c:8:
+C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/I2C.h:105:5: error: unknown type name 'I2C_Congif_t'
+  105 |     I2C_Congif_t I2C_Congif;
+      |     ^~~~~~~~~~~~
+make: *** [Lib/Src/subdir.mk:37: Lib/Src/Delay.o] Error 1
+../Lib/Src/I2C.c: In function 'I2C_Init':
+make: *** Waiting for unfinished jobs....
+make: *** [Src/subdir.mk:29: Src/main.o] Error 1
+../Lib/Src/I2C.c:101:20: error: 'I2C_Handle_t' has no member named 'I2C_Congif_t'; did you mean 'I2C_Congif'?
+  101 |     if(pI2CHandle->I2C_Congif_t.I2C_SCLSpeed <= I2C_SCL_SPEED_SM){      // For normal mode
+      |                    ^~~~~~~~~~~~
+      |                    I2C_Congif
+../Lib/Src/I2C.c:103:61: error: 'I2C_Handle_t' has no member named 'I2C_Congif_t'; did you mean 'I2C_Congif'?
+  103 |         ccr_value = (RCC_GetPCLK1Value() / (2 * pI2CHandle->I2C_Congif_t.I2C_SCLSpeed));
+      |                                                             ^~~~~~~~~~~~
+      |                                                             I2C_Congif
+../Lib/Src/I2C.c:109:30: error: 'I2C_Handle_t' has no member named 'I2C_Congif_t'; did you mean 'I2C_Congif'?
+  109 |         temp |= (pI2CHandle->I2C_Congif_t.I2C_FMDutyCyCle << 14);
+      |                              ^~~~~~~~~~~~
+      |                              I2C_Congif
+../Lib/Src/I2C.c:110:24: error: 'I2C_Handle_t' has no member named 'I2C_Congif_t'; did you mean 'I2C_Congif'?
+  110 |         if(pI2CHandle->I2C_Congif_t.I2C_FMDutyCyCle == I2C_FMDUTY_2){
+      |                        ^~~~~~~~~~~~
+      |                        I2C_Congif
+../Lib/Src/I2C.c:111:65: error: 'I2C_Handle_t' has no member named 'I2C_Congif_t'; did you mean 'I2C_Congif'?
+  111 |             ccr_value = (RCC_GetPCLK1Value() / (3 * pI2CHandle->I2C_Congif_t.I2C_SCLSpeed));
+      |                                                                 ^~~~~~~~~~~~
+      |                                                                 I2C_Congif
+../Lib/Src/I2C.c:114:66: error: 'I2C_Handle_t' has no member named 'I2C_Congif_t'; did you mean 'I2C_Congif'?
+  114 |             ccr_value = (RCC_GetPCLK1Value() / (25 * pI2CHandle->I2C_Congif_t.I2C_SCLSpeed));
+      |                                                                  ^~~~~~~~~~~~
+      |                                                                  I2C_Congif
+../Lib/Src/I2C.c:124:20: error: 'I2C_Handle_t' has no member named 'I2C_Congif_t'; did you mean 'I2C_Congif'?
+  124 |     if(pI2CHandle->I2C_Congif_t.I2C_SCLSpeed <= I2C_SCL_SPEED_SM){      // Mode is standard mode
+      |                    ^~~~~~~~~~~~
+      |                    I2C_Congif
+../Lib/Src/I2C.c:125:58: error: 'I2C_Handle_t' has no member named 'I2C_Congif_t'; did you mean 'I2C_Congif'?
+  125 |         trise_value = (RCC_GetPCLK1Value() / pI2CHandle->I2C_Congif_t.I2C_SCLSpeed) + 1;
+      |                                                          ^~~~~~~~~~~~
+      |                                                          I2C_Congif
+make: *** [Lib/Src/subdir.mk:37: Lib/Src/I2C.o] Error 1
+In file included from C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/stm32f411.h:132,
+                 from ../Lib/Src/GPIO.c:8:
+C:/Users/Administrator/STM32CubeIDE/workspace_1.18.1/Final_Prj/Lib/Inc/I2C.h:105:5: error: unknown type name 'I2C_Congif_t'
+  105 |     I2C_Congif_t I2C_Congif;
+      |     ^~~~~~~~~~~~
+../Lib/Src/GPIO.c: In function 'Pin_Mode':
+../Lib/Src/GPIO.c:132:19: warning: passing argument 1 of 'GPIO_Init' from incompatible pointer type [-Wincompatible-pointer-types]
+  132 |         GPIO_Init(&Device->pGPIOx);
+      |                   ^~~~~~~~~~~~~~~
+      |                   |
+      |                   GPIO_RegDef_t **
+../Lib/Src/GPIO.c:27:31: note: expected 'GPIO_Handle_t *' but argument is of type 'GPIO_RegDef_t **'
+   27 | void GPIO_Init(GPIO_Handle_t *pGPIOHandel){
+      |                ~~~~~~~~~~~~~~~^~~~~~~~~~~
+make: *** [Lib/Src/subdir.mk:37: Lib/Src/GPIO.o] Error 1
+"make -j4 all" terminated with exit code 2. Build might be incomplete.
+
+13:36:16 Build Failed. 18 errors, 2 warnings. (took 355ms)
+

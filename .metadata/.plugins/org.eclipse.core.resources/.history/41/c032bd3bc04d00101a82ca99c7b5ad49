@@ -1,0 +1,48 @@
+/*
+ * Device.cpp
+ *
+ *  Created on: Jun 20, 2025
+ *      Author: Administrator
+ */
+
+#include "Device.h"
+
+
+
+Device::Device(std::string name){
+	if (name.compare("Living Room") == 0){
+		id = em_LV_R;
+	}
+	else if (name.compare("Kitchen Room") == 0){
+		id = em_KC_R;
+	}
+
+	else if (name.compare("Bed Room") == 0){
+		id = em_B_R;
+	}
+
+	// For shift IC
+	init_74HC595(id);
+//	// For LCD
+
+
+}
+
+//Device::~Device() {
+//	// TODO Auto-generated destructor stub
+//}
+
+void Device::TurnOnLed(uint8_t data){
+	Write_data(data, (uint8_t )this->id);
+}
+
+void Device::TurnOffLed(uint8_t data){
+	Write_data((data >> data) & 0x0 , id);
+}
+
+void Device::ShowDisplay(char *data, int row, int col){
+//	lcd_goto_XY(row, col);
+//	lcd_send_string(data);
+}
+
+

@@ -1,0 +1,3 @@
+../Driver/Src/Delay.c:10:6:TIM5Config	4	static
+../Driver/Src/Delay.c:31:6:Delay_us	16	static
+../Driver/Src/Delay.c:42:6:Delay_ms	24	static

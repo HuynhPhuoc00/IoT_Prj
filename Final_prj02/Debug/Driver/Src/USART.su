@@ -1,0 +1,6 @@
+../Driver/Src/USART.c:12:13:Config_GPIO_USART	32	static
+../Driver/Src/USART.c:37:6:USART_Init	48	static
+../Driver/Src/USART.c:68:6:USART_SendChar	16	static
+../Driver/Src/USART.c:74:6:UART_SendString	16	static
+../Driver/Src/USART.c:80:9:UART_ReceiveChar	16	static
+../Driver/Src/USART.c:85:16:USART_GetFlagStatus	16	static

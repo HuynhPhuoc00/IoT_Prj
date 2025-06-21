@@ -1,0 +1,86 @@
+/*
+ * lcd.c
+ *
+ *  Created on: Jun 20, 2025
+ *      Author: Administrator
+ */
+
+#include "i2c_lcd2.h"
+
+extern I2C_HandleTypeDef hi2c1;
+#define SLAVE_ADDRESS_LCD 0x4Eu
+
+void i2c_lcd_init(){
+	HAL_Delay(10);
+	i2c_send_cmd_lcd (0x33); /* set 4-bits interface */
+	i2c_send_cmd_lcd (0x32);
+	HAL_Delay(1);
+    HAL_Delay(1); i2c_send_cmd_lcd (0x2);  // 4bit mode
+	HAL_Delay(1); i2c_send_cmd_lcd (0x28); // Function set --> DL=0 (4 bit mode), N = 1 (2 line display) F = 0 (5x8 characters)
+
+	HAL_Delay(1);
+	i2c_send_cmd_lcd(0x0C); HAL_Delay(1);
+	i2c_send_cmd_lcd(0x01); HAL_Delay(2);
+	i2c_send_cmd_lcd(0x06); HAL_Delay(1);
+
+	HAL_Delay(200);
+//	i2c_send_string("A");
+	i2c_lcd_put_cur(0,0);
+	i2c_send_string("Init LCD success"); // Test
+	i2c_lcd_put_cur(1,0);
+	i2c_send_string("Init LCD success"); // Test
+	HAL_Delay(2000);
+//	i2c_lcd_clear();
+}
+
+
+void i2c_send_cmd_lcd(char data){
+	char data_u, data_l;
+	uint8_t data_t[4];
+	data_u = (data&0xf0);
+	data_l = ((data<<4)&0xf0);
+	data_t[0] = data_u|0x0C;  //en=1, rs=0
+	data_t[1] = data_u|0x08;  //en=0, rs=0
+	data_t[2] = data_l|0x0C;  //en=1, rs=0
+	data_t[3] = data_l|0x08;  //en=0, rs=0
+	if(HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100) != HAL_OK){
+	}
+}
+
+void i2c_send_data_lcd(char data){
+	char data_u, data_l;
+	uint8_t data_t[4];
+	data_u = (data&0xf0);
+	data_l = ((data<<4)&0xf0);
+	data_t[0] = data_u|0x0D;  //en=1, rs=0
+	data_t[1] = data_u|0x09;  //en=0, rs=0
+	data_t[2] = data_l|0x0D;  //en=1, rs=0
+	data_t[3] = data_l|0x09;  //en=0, rs=0
+	if(HAL_I2C_Master_Transmit (&hi2c1, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, 4, 100) != HAL_OK){
+	}
+}
+
+void i2c_send_string(char *data){
+	while (*data){
+		i2c_send_data_lcd(*data++);
+		HAL_Delay(2);
+	}
+}
+
+void i2c_lcd_clear(){
+	i2c_send_cmd_lcd(0x01); HAL_Delay(2);
+}
+
+void i2c_lcd_put_cur(int row, int col){
+    switch (row){
+        case 0:
+            col |= 0x80;
+            break;
+        case 1:
+            col |= 0xC0;
+            break;
+    }
+
+    i2c_send_cmd_lcd (col);
+}
+
