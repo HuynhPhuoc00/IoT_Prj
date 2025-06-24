@@ -62,10 +62,10 @@ void i2c_send_data_lcd(char data){
 	uint8_t data_t[4];
 	data_u = (data&0xf0);
 	data_l = ((data<<4)&0xf0);
-	data_t[0] = data_u|0x0D;  //en=1, rs=0
-	data_t[1] = data_u|0x09;  //en=0, rs=0
-	data_t[2] = data_l|0x0D;  //en=1, rs=0
-	data_t[3] = data_l|0x09;  //en=0, rs=0
+	data_t[0] = data_u|0x0D;  //en=1, rs=1
+	data_t[1] = data_u|0x09;  //en=0, rs=1
+	data_t[2] = data_l|0x0D;  //en=1, rs=1
+	data_t[3] = data_l|0x09;  //en=0, rs=1
 	I2C_MasterSend_Multi_Data(&hi2c1, data_t, 4);
 }
 

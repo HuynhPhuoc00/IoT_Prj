@@ -62,12 +62,12 @@ void lcd_init(){
 
 void write_data_lcd(char data){
 	Write_data((uint8_t)data, DS3, LSB);
-	GPIO_WriteToOutPutPin(PE10.pGPIOx, 10, High); HAL_Delay(1);
-	GPIO_WriteToOutPutPin(PE10.pGPIOx, 10, Low); HAL_Delay(1);
+//	GPIO_WriteToOutPutPin(PE10.pGPIOx, 10, High); HAL_Delay(1);
+//	GPIO_WriteToOutPutPin(PE10.pGPIOx, 10, Low); HAL_Delay(1);
 }
 
 void send_cmd_lcd(char data){
-	GPIO_WriteToOutPutPin(PE9.pGPIOx, 9, Low); // Set RS low to write cmd
+//	GPIO_WriteToOutPutPin(PE9.pGPIOx, 9, Low); // Set RS low to write cmd
 
 #ifdef lcd4_bit
 	char tmp;
@@ -86,10 +86,10 @@ void send_data_lcd(char data){
 
 #ifdef lcd4_bit
     char tmp;
-	tmp = (data >> 4) & 0x0F;
+	tmp = ((data >> 4) | (1<<4)) & 0x1F;
 	write_data_lcd(tmp);
 
-	tmp = data & 0x0F;
+	tmp = (data | (1<<4)) & 0x1F;
 	write_data_lcd(tmp);
 #else
 	write_data_lcd(data);
