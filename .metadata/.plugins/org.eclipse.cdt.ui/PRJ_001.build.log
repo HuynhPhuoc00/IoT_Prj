@@ -1,10 +1,64 @@
-02:18:17 **** Incremental Build of configuration Debug for project PRJ_001 ****
+09:42:42 **** Incremental Build of configuration Debug for project PRJ_001 ****
 make -j4 all 
+arm-none-eabi-gcc "../Core/Src/lcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/lcd.d" -MT"Core/Src/lcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lcd.o"
+In file included from ../Core/Src/lcd.h:15,
+                 from ../Core/Src/lcd.c:8:
+../Core/Src/stm32f411.h:54: warning: "GPIOA" redefined
+   54 | #define GPIOA   ((GPIO_RegDef_t*)GPIOA_BASE_ADDR)
+      | 
+In file included from ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:146,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:29,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:27,
+                 from ../Core/Inc/stm32f4xx_hal_conf.h:275,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Src/stm32f411.h:15:
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:779: note: this is the location of the previous definition
+  779 | #define GPIOA               ((GPIO_TypeDef *) GPIOA_BASE)
+      | 
+../Core/Src/stm32f411.h:55: warning: "GPIOB" redefined
+   55 | #define GPIOB   ((GPIO_RegDef_t*)GPIOB_BASE_ADDR)
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:780: note: this is the location of the previous definition
+  780 | #define GPIOB               ((GPIO_TypeDef *) GPIOB_BASE)
+      | 
+../Core/Src/stm32f411.h:56: warning: "GPIOC" redefined
+   56 | #define GPIOC   ((GPIO_RegDef_t*)GPIOC_BASE_ADDR)
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:781: note: this is the location of the previous definition
+  781 | #define GPIOC               ((GPIO_TypeDef *) GPIOC_BASE)
+      | 
+../Core/Src/stm32f411.h:57: warning: "GPIOD" redefined
+   57 | #define GPIOD   ((GPIO_RegDef_t*)GPIOD_BASE_ADDR)
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:782: note: this is the location of the previous definition
+  782 | #define GPIOD               ((GPIO_TypeDef *) GPIOD_BASE)
+      | 
+../Core/Src/stm32f411.h:59: warning: "GPIOE" redefined
+   59 | #define GPIOE   ((GPIO_RegDef_t*)GPIOE_BASE_ADDR)
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:783: note: this is the location of the previous definition
+  783 | #define GPIOE               ((GPIO_TypeDef *) GPIOE_BASE)
+      | 
+../Core/Src/stm32f411.h:98: warning: "RCC" redefined
+   98 | #define RCC ((RCC_RegDef_t*)RCC_BASE_ADDR)
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:786: note: this is the location of the previous definition
+  786 | #define RCC                 ((RCC_TypeDef *) RCC_BASE)
+      | 
+arm-none-eabi-g++ -o "PRJ_001.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Administrator\STM32CubeIDE\workspace_1.18.1\PRJ_001\STM32F401VEHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PRJ_001.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: PRJ_001.elf
+ 
 arm-none-eabi-size  PRJ_001.elf 
+arm-none-eabi-objdump -h -S PRJ_001.elf  > "PRJ_001.list"
+arm-none-eabi-objcopy  -O ihex PRJ_001.elf  "PRJ_001.hex"
    text	   data	    bss	    dec	    hex	filename
-  10792	     92	   2164	  13048	   32f8	PRJ_001.elf
+  14876	    112	   2160	  17148	   42fc	PRJ_001.elf
 Finished building: default.size.stdout
  
+Finished building: PRJ_001.hex
+ 
+Finished building: PRJ_001.list
+ 
 
-02:18:17 Build Finished. 0 errors, 0 warnings. (took 318ms)
+09:42:43 Build Finished. 0 errors, 6 warnings. (took 816ms)
 

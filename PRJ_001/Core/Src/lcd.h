@@ -25,15 +25,11 @@ extern "C" {
 #define LCD_CTRL_RS   (LCD_RS | LCD_BL)          // RS = 1, RW = 0, BL = 1
 #define LCD_CTRL_CMD  (0 | LCD_BL)               // RS = 0, RW = 0, BL = 1
 
-extern GPIO_Handle_t PE9;
-extern GPIO_Handle_t PE10;
-
-void Config_GPIO_LCD();
 void lcd_init();
-void write_data_lcd(char data);
 void send_cmd_lcd(char data);
 void send_data_lcd(char data);
-void send_string_lcd(char *data);void lcd_put_cur(int row, int col);
+void send_string_lcd(char *data);
+void lcd_put_cur(int row, int col);
 void lcd_clear();
 
 #ifdef __cplusplus

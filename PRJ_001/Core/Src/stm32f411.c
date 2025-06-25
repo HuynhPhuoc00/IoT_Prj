@@ -85,3 +85,12 @@ uint32_t RCC_GetPCLK2Value(void){
     pclk2 = (SystemClk/ahbp) / apb2;
     return pclk2;
 }
+
+// Delay Function
+uint32_t RCC_GetSystemClock(void) {
+    uint8_t clksrc = (RCC->CFGR >> 2) & 0x3;
+    if (clksrc == 0) return 16000000U;     // HSI
+    if (clksrc == 1) return 8000000U;      // HSE
+    return Get_Output_CLK();              // PLL
+}
+

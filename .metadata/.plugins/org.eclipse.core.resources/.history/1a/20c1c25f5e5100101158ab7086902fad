@@ -1,0 +1,7 @@
+../Core/Src/i2c_lcd2.c:13:6:i2c_Config	1
+../Core/Src/i2c_lcd2.c:23:6:i2c_lcd_init	1
+../Core/Src/i2c_lcd2.c:48:6:i2c_send_cmd_lcd	1
+../Core/Src/i2c_lcd2.c:60:6:i2c_send_data_lcd	1
+../Core/Src/i2c_lcd2.c:72:6:i2c_send_string	2
+../Core/Src/i2c_lcd2.c:78:6:i2c_lcd_clear	1
+../Core/Src/i2c_lcd2.c:82:6:i2c_lcd_put_cur	3

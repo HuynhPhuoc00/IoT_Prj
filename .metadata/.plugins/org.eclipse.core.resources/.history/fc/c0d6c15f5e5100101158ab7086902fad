@@ -1,0 +1,13 @@
+../Core/Src/I2C_u.c:26:13:I2C_GenrateStartCondition	16	static
+../Core/Src/I2C_u.c:31:13:I2C_ClearAddrFlag	24	static
+../Core/Src/I2C_u.c:37:13:I2C_GenrateStopCondition	16	static
+../Core/Src/I2C_u.c:42:13:Config_GPIO_I2C	32	static
+../Core/Src/I2C_u.c:70:6:I2C_PeriClockControl	16	static
+../Core/Src/I2C_u.c:84:6:I2C_Init	24	static
+../Core/Src/I2C_u.c:150:9:I2C_GetFlagStatus	16	static
+../Core/Src/I2C_u.c:157:6:I2C_Start	16	static
+../Core/Src/I2C_u.c:165:13:I2C_Address	24	static
+../Core/Src/I2C_u.c:183:6:I2C_MasterSend_Data	16	static
+../Core/Src/I2C_u.c:193:13:I2C_MasterSend_Multi_Data	32	static
+../Core/Src/I2C_u.c:249:6:I2C_MasterRead_Data	32	static
+../Core/Src/I2C_u.c:299:6:I2C_Stop	16	static

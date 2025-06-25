@@ -22,17 +22,17 @@ void i2c_Config(){
 
 void i2c_lcd_init(){
 	i2c_Config();
-	HAL_Delay(10);
+	delay_ms(10);
 	i2c_send_cmd_lcd (0x33); /* set 4-bits interface */
-	i2c_send_cmd_lcd (0x32);HAL_Delay(1);
-//    HAL_Delay(1); i2c_send_cmd_lcd (0x20);  // 4bit mode
-	HAL_Delay(1); i2c_send_cmd_lcd (0x28); // Function set --> DL=0 (4 bit mode), N = 1 (2 line display) F = 0 (5x8 characters)
+	i2c_send_cmd_lcd (0x32);delay_ms(1);
+//    delay_ms(1); i2c_send_cmd_lcd (0x20);  // 4bit mode
+	delay_ms(1); i2c_send_cmd_lcd (0x28); // Function set --> DL=0 (4 bit mode), N = 1 (2 line display) F = 0 (5x8 characters)
 
-	HAL_Delay(1);
-	i2c_send_cmd_lcd(0x01); HAL_Delay(1); // clear display
-	i2c_send_cmd_lcd(0x06); HAL_Delay(2); // entry mode
-	i2c_send_cmd_lcd(0x0C); HAL_Delay(1); // set on display
-	i2c_send_cmd_lcd(0x02); HAL_Delay(1); // move cursor to home
+	delay_ms(1);
+	i2c_send_cmd_lcd(0x01); delay_ms(1); // clear display
+	i2c_send_cmd_lcd(0x06); delay_ms(2); // entry mode
+	i2c_send_cmd_lcd(0x0C); delay_ms(1); // set on display
+	i2c_send_cmd_lcd(0x02); delay_ms(1); // move cursor to home
 
 	i2c_lcd_clear();
 
@@ -42,6 +42,8 @@ void i2c_lcd_init(){
 	i2c_lcd_put_cur(1,0);
 	i2c_send_string("Init LCD succes"); // Test
 
+	delay_ms(500);
+	i2c_lcd_clear();
 }
 
 
@@ -76,7 +78,7 @@ void i2c_send_string(char *data){
 }
 
 void i2c_lcd_clear(){
-	i2c_send_cmd_lcd(0x01);HAL_Delay(1);
+	i2c_send_cmd_lcd(0x01);delay_ms(1);
 }
 
 void i2c_lcd_put_cur(int row, int col){

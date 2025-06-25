@@ -1,0 +1,146 @@
+/*
+ * 74HC595.c
+ *
+ *  Created on: Jun 5, 2025
+ *      Author: Administrator
+ */
+
+#include "74HC595.h"
+
+/*****************************************************
+ *	PE0->SH_CP
+ *	PE1->DS0
+ *	PE2-ST_CP0
+ *	PE3->DS1
+ *	PE4-ST_CP1
+ *	PE5->DS2
+ *	PE6-ST_CP2
+ *	PE7->DS3
+ *	PE8-ST_CP3
+ *****************************************************/
+Pin_74H595 Pin_74H595_0;
+Pin_74H595 Pin_74H595_1;
+Pin_74H595 Pin_74H595_2;
+Pin_74H595 Pin_74H595_3;
+
+void Clk_En(uint8_t DS_GPIO_PIN_NUM){
+	Pin_74H595 *Pin_74H595_t;
+	if (DS_GPIO_PIN_NUM == DS0){
+		Pin_74H595_t = &Pin_74H595_0;
+	}
+	else if (DS_GPIO_PIN_NUM == DS1){
+		Pin_74H595_t = &Pin_74H595_1;
+	}
+	else if (DS_GPIO_PIN_NUM == DS2){
+		Pin_74H595_t = &Pin_74H595_2;
+	}
+	else if (DS_GPIO_PIN_NUM == DS3){
+		Pin_74H595_t = &Pin_74H595_3;
+	}
+	GPIO_WriteToOutPutPin(Pin_74H595_t->SH_CP.pGPIOx, Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinNumber, High);
+	HAL_Delay(1);
+	GPIO_WriteToOutPutPin(Pin_74H595_t->SH_CP.pGPIOx, Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinNumber, Low);
+	HAL_Delay(1);
+}
+
+void Write_data(uint8_t data, uint8_t DS_GPIO_PIN_NUM, uint8_t MSBorLSB){
+	Pin_74H595 *Pin_74H595_t;
+	if (DS_GPIO_PIN_NUM == DS0){
+		Pin_74H595_t = &Pin_74H595_0;
+	}
+	else if (DS_GPIO_PIN_NUM == DS1){
+		Pin_74H595_t = &Pin_74H595_1;
+	}
+	else if (DS_GPIO_PIN_NUM == DS2){
+		Pin_74H595_t = &Pin_74H595_2;
+	}
+	else if (DS_GPIO_PIN_NUM == DS3){
+		Pin_74H595_t = &Pin_74H595_3;
+	}
+	if (MSBorLSB == LSB){
+		for(int i = 7; i >= 0; i--){
+			if((data >> i) & 0x01){
+				GPIO_WriteToOutPutPin(Pin_74H595_t->DS.pGPIOx, Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinNumber, High);
+			}else{
+				GPIO_WriteToOutPutPin(Pin_74H595_t->DS.pGPIOx, Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinNumber, Low);
+			}
+			Clk_En(DS_GPIO_PIN_NUM);
+		}
+		Latch_En(DS_GPIO_PIN_NUM);
+	}
+	else if (MSBorLSB == MSB){
+		for(int i = 0; i < 8; i++){
+			if((data >> i) & 0x01){
+				GPIO_WriteToOutPutPin(Pin_74H595_t->DS.pGPIOx, Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinNumber, High);
+			}else{
+				GPIO_WriteToOutPutPin(Pin_74H595_t->DS.pGPIOx, Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinNumber, Low);
+			}
+			Clk_En(DS_GPIO_PIN_NUM);
+		}
+		Latch_En(DS_GPIO_PIN_NUM);
+	}
+}
+
+void Latch_En(uint8_t DS_GPIO_PIN_NUM){
+	Pin_74H595 *Pin_74H595_t;
+	if (DS_GPIO_PIN_NUM == DS0){
+		Pin_74H595_t = &Pin_74H595_0;
+	}
+	else if (DS_GPIO_PIN_NUM == DS1){
+		Pin_74H595_t = &Pin_74H595_1;
+	}
+	else if (DS_GPIO_PIN_NUM == DS2){
+		Pin_74H595_t = &Pin_74H595_2;
+	}
+	else if (DS_GPIO_PIN_NUM == DS3){
+		Pin_74H595_t = &Pin_74H595_3;
+	}
+	GPIO_WriteToOutPutPin(Pin_74H595_t->ST_CP.pGPIOx, Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinNumber, High);
+	HAL_Delay(5);
+	GPIO_WriteToOutPutPin(Pin_74H595_t->ST_CP.pGPIOx, Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinNumber, Low);
+	HAL_Delay(5);
+}
+
+Pin_74H595 Set_74HC595(Pin_74H595 *Pin_74H595_t, uint8_t DS_GPIO_PIN_NUM, uint8_t ST_CP_GPIO_PIN_NUM){
+	GPIOE_PCLK_EN;
+	Pin_74H595_t->SH_CP.pGPIOx = GPIOE;
+	Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_0;
+	Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
+	Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	GPIO_Init(&(Pin_74H595_t->SH_CP));
+
+	Pin_74H595_t->DS.pGPIOx = GPIOE;
+	Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinNumber = DS_GPIO_PIN_NUM;
+	Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
+	Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	GPIO_Init(&(Pin_74H595_t->DS));
+
+	Pin_74H595_t->ST_CP.pGPIOx = GPIOE;
+	Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinNumber = ST_CP_GPIO_PIN_NUM;
+	Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
+	Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	GPIO_Init(&(Pin_74H595_t->ST_CP));
+
+	return *Pin_74H595_t;
+}
+
+void init_74HC595(uint8_t DS_GPIO_PIN_NUM){
+	if (DS_GPIO_PIN_NUM == DS0){
+		Pin_74H595_0 = Set_74HC595(&Pin_74H595_0, DS_GPIO_PIN_NUM, ST_CP0);
+	}
+	else if (DS_GPIO_PIN_NUM == DS1){
+		Pin_74H595_1 = Set_74HC595(&Pin_74H595_1, DS_GPIO_PIN_NUM, ST_CP1);
+	}
+	else if (DS_GPIO_PIN_NUM == DS2){
+		Pin_74H595_2 = Set_74HC595(&Pin_74H595_2, DS_GPIO_PIN_NUM, ST_CP2);
+	}
+	else if (DS_GPIO_PIN_NUM == DS3){
+		Pin_74H595_2 = Set_74HC595(&Pin_74H595_3, DS_GPIO_PIN_NUM, ST_CP3);
+	}
+}

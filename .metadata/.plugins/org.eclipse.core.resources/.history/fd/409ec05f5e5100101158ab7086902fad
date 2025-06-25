@@ -1,0 +1,5 @@
+../Core/Src/74HC595.c:26:6:Clk_En	24	static
+../Core/Src/74HC595.c:46:6:Write_data	32	static
+../Core/Src/74HC595.c:84:6:Latch_En	24	static
+../Core/Src/74HC595.c:104:12:Set_74HC595	32	static
+../Core/Src/74HC595.c:133:6:init_74HC595	64	static

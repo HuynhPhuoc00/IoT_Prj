@@ -98,6 +98,9 @@ int main(void)
 	LVR.TurnOnLed(Room::em_Led1);
 	KTR.TurnOnLed(Room::em_Led2);
 	BR.TurnOnLed(Room::em_Led3);
+	delay_ms(1000);
+	i2c_lcd_clear();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

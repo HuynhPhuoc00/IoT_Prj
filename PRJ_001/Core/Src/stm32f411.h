@@ -135,6 +135,31 @@ typedef struct
 uint32_t RCC_GetPCLK1Value(void);
 uint32_t RCC_GetPCLK2Value(void);
 uint32_t Get_Output_CLK();
+uint32_t RCC_GetSystemClock(void);
+
+void delay_us(uint32_t us);
+
+#define SystemCoreClock (RCC_GetSystemClock())
+
+#define SYSTICK_LOAD (SystemCoreClock/1000000U)
+#define SYSTICK_DELAY_CALIB (SYSTICK_LOAD >> 1)
+
+#define delay_us(us)	\
+	do{	\
+		CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;	\
+		DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;	\
+		uint32_t start = DWT->CYCCNT;	\
+		uint32_t ticks = (SystemCoreClock / 1000000) * us;	\
+		while ((DWT->CYCCNT - start) < ticks);	\
+	} while(0)
+
+
+#define delay_ms(ms)	\
+	do{	\
+		for (uint32_t i = 0; i < ms; ++i) {	\
+			delay_us(1000);	\
+		}	\
+	} while(0)
 
 #include "GPIO.h"
 //#include "I2C.h"
