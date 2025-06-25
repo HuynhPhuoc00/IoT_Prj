@@ -1,8 +1,8 @@
-09:42:42 **** Incremental Build of configuration Debug for project PRJ_001 ****
+11:31:42 **** Incremental Build of configuration Debug for project PRJ_001 ****
 make -j4 all 
-arm-none-eabi-gcc "../Core/Src/lcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/lcd.d" -MT"Core/Src/lcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lcd.o"
-In file included from ../Core/Src/lcd.h:15,
-                 from ../Core/Src/lcd.c:8:
+arm-none-eabi-gcc "../Core/Src/USART.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/USART.d" -MT"Core/Src/USART.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/USART.o"
+In file included from ../Core/Src/USART.h:11,
+                 from ../Core/Src/USART.c:7:
 ../Core/Src/stm32f411.h:54: warning: "GPIOA" redefined
    54 | #define GPIOA   ((GPIO_RegDef_t*)GPIOA_BASE_ADDR)
       | 
@@ -45,6 +45,244 @@ In file included from ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:1
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:786: note: this is the location of the previous definition
   786 | #define RCC                 ((RCC_TypeDef *) RCC_BASE)
       | 
+In file included from ../Core/Src/stm32f411.h:165:
+../Core/Src/I2C_u.h:34: warning: "I2C1" redefined
+   34 | #define I2C1                ((I2C_RegDef_t*)I2C1_BASE_ADD)
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:760: note: this is the location of the previous definition
+  760 | #define I2C1                ((I2C_TypeDef *) I2C1_BASE)
+      | 
+../Core/Src/I2C_u.h:35: warning: "I2C2" redefined
+   35 | #define I2C2                ((I2C_RegDef_t*)I2C1_BASE_ADD)
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:761: note: this is the location of the previous definition
+  761 | #define I2C2                ((I2C_TypeDef *) I2C2_BASE)
+      | 
+../Core/Src/I2C_u.h:36: warning: "I2C3" redefined
+   36 | #define I2C3                ((I2C_RegDef_t*)I2C1_BASE_ADD)
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:762: note: this is the location of the previous definition
+  762 | #define I2C3                ((I2C_TypeDef *) I2C3_BASE)
+      | 
+../Core/Src/I2C_u.h:51: warning: "I2C_CR1_PE" redefined
+   51 | #define I2C_CR1_PE          1
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3534: note: this is the location of the previous definition
+ 3534 | #define I2C_CR1_PE                I2C_CR1_PE_Msk                               /*!<Peripheral Enable                             */
+      | 
+../Core/Src/I2C_u.h:53: warning: "I2C_CR1_START" redefined
+   53 | #define I2C_CR1_START       8
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3555: note: this is the location of the previous definition
+ 3555 | #define I2C_CR1_START             I2C_CR1_START_Msk                            /*!<Start Generation                              */
+      | 
+../Core/Src/I2C_u.h:54: warning: "I2C_CR1_STOP" redefined
+   54 | #define I2C_CR1_STOP        9
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3558: note: this is the location of the previous definition
+ 3558 | #define I2C_CR1_STOP              I2C_CR1_STOP_Msk                             /*!<Stop Generation                               */
+      | 
+../Core/Src/I2C_u.h:55: warning: "I2C_CR1_ACK" redefined
+   55 | #define I2C_CR1_ACK         10
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3561: note: this is the location of the previous definition
+ 3561 | #define I2C_CR1_ACK               I2C_CR1_ACK_Msk                              /*!<Acknowledge Enable                            */
+      | 
+../Core/Src/I2C_u.h:56: warning: "I2C_CR1_SWRST" redefined
+   56 | #define I2C_CR1_SWRST       15
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3573: note: this is the location of the previous definition
+ 3573 | #define I2C_CR1_SWRST             I2C_CR1_SWRST_Msk                            /*!<Software Reset                                */
+      | 
+../Core/Src/I2C_u.h:59: warning: "I2C_CR2_FREQ" redefined
+   59 | #define I2C_CR2_FREQ        0
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3578: note: this is the location of the previous definition
+ 3578 | #define I2C_CR2_FREQ              I2C_CR2_FREQ_Msk                             /*!<FREQ[5:0] bits (Peripheral Clock Frequency)   */
+      | 
+../Core/Src/I2C_u.h:60: warning: "I2C_CR2_ITERREN" redefined
+   60 | #define I2C_CR2_ITERREN     8
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3588: note: this is the location of the previous definition
+ 3588 | #define I2C_CR2_ITERREN           I2C_CR2_ITERREN_Msk                          /*!<Error Interrupt Enable  */
+      | 
+../Core/Src/I2C_u.h:61: warning: "I2C_CR2_ITEVTEN" redefined
+   61 | #define I2C_CR2_ITEVTEN     9
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3591: note: this is the location of the previous definition
+ 3591 | #define I2C_CR2_ITEVTEN           I2C_CR2_ITEVTEN_Msk                          /*!<Event Interrupt Enable  */
+      | 
+../Core/Src/I2C_u.h:62: warning: "I2C_CR2_ITBUFEN" redefined
+   62 | #define I2C_CR2_ITBUFEN     10
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3594: note: this is the location of the previous definition
+ 3594 | #define I2C_CR2_ITBUFEN           I2C_CR2_ITBUFEN_Msk                          /*!<Buffer Interrupt Enable */
+      | 
+../Core/Src/I2C_u.h:65: warning: "I2C_OAR1_ADD0" redefined
+   65 | #define I2C_OAR1_ADD0       0
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3608: note: this is the location of the previous definition
+ 3608 | #define I2C_OAR1_ADD0             I2C_OAR1_ADD0_Msk                            /*!<Bit 0 */
+      | 
+../Core/Src/I2C_u.h:66: warning: "I2C_OAR1_ADD7" redefined
+   66 | #define I2C_OAR1_ADD7       1
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3629: note: this is the location of the previous definition
+ 3629 | #define I2C_OAR1_ADD7             I2C_OAR1_ADD7_Msk                            /*!<Bit 7 */
+      | 
+../Core/Src/I2C_u.h:68: warning: "I2C_OAR1_ADDMODE" redefined
+   68 | #define I2C_OAR1_ADDMODE    15
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3639: note: this is the location of the previous definition
+ 3639 | #define I2C_OAR1_ADDMODE          I2C_OAR1_ADDMODE_Msk                         /*!<Addressing Mode (Slave mode) */
+      | 
+../Core/Src/I2C_u.h:71: warning: "I2C_SR1_SB" redefined
+   71 | #define I2C_SR1_SB          0
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3657: note: this is the location of the previous definition
+ 3657 | #define I2C_SR1_SB                I2C_SR1_SB_Msk                               /*!<Start Bit (Master mode)                         */
+      | 
+../Core/Src/I2C_u.h:72: warning: "I2C_SR1_ADDR" redefined
+   72 | #define I2C_SR1_ADDR        1
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3660: note: this is the location of the previous definition
+ 3660 | #define I2C_SR1_ADDR              I2C_SR1_ADDR_Msk                             /*!<Address sent (master mode)/matched (slave mode) */
+      | 
+../Core/Src/I2C_u.h:73: warning: "I2C_SR1_BTF" redefined
+   73 | #define I2C_SR1_BTF         2
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3663: note: this is the location of the previous definition
+ 3663 | #define I2C_SR1_BTF               I2C_SR1_BTF_Msk                              /*!<Byte Transfer Finished                          */
+      | 
+../Core/Src/I2C_u.h:74: warning: "I2C_SR1_ADD10" redefined
+   74 | #define I2C_SR1_ADD10       3
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3666: note: this is the location of the previous definition
+ 3666 | #define I2C_SR1_ADD10             I2C_SR1_ADD10_Msk                            /*!<10-bit header sent (Master mode)                */
+      | 
+../Core/Src/I2C_u.h:75: warning: "I2C_SR1_STOPF" redefined
+   75 | #define I2C_SR1_STOPF       4
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3669: note: this is the location of the previous definition
+ 3669 | #define I2C_SR1_STOPF             I2C_SR1_STOPF_Msk                            /*!<Stop detection (Slave mode)                     */
+      | 
+../Core/Src/I2C_u.h:78: warning: "I2C_SR1_BERR" redefined
+   78 | #define I2C_SR1_BERR        8
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3678: note: this is the location of the previous definition
+ 3678 | #define I2C_SR1_BERR              I2C_SR1_BERR_Msk                             /*!<Bus Error                                       */
+      | 
+../Core/Src/I2C_u.h:79: warning: "I2C_SR1_ARLO" redefined
+   79 | #define I2C_SR1_ARLO        9
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3681: note: this is the location of the previous definition
+ 3681 | #define I2C_SR1_ARLO              I2C_SR1_ARLO_Msk                             /*!<Arbitration Lost (master mode)                  */
+      | 
+../Core/Src/I2C_u.h:80: warning: "I2C_SR1_AF" redefined
+   80 | #define I2C_SR1_AF          10
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3684: note: this is the location of the previous definition
+ 3684 | #define I2C_SR1_AF                I2C_SR1_AF_Msk                               /*!<Acknowledge Failure                             */
+      | 
+../Core/Src/I2C_u.h:81: warning: "I2C_SR1_OVR" redefined
+   81 | #define I2C_SR1_OVR         11
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3687: note: this is the location of the previous definition
+ 3687 | #define I2C_SR1_OVR               I2C_SR1_OVR_Msk                              /*!<Overrun/Underrun                                */
+      | 
+../Core/Src/I2C_u.h:85: warning: "I2C_SR2_MSL" redefined
+   85 | #define I2C_SR2_MSL         0
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3701: note: this is the location of the previous definition
+ 3701 | #define I2C_SR2_MSL               I2C_SR2_MSL_Msk                              /*!<Master/Slave                                    */
+      | 
+../Core/Src/I2C_u.h:86: warning: "I2C_SR2_BUSY" redefined
+   86 | #define I2C_SR2_BUSY        1
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3704: note: this is the location of the previous definition
+ 3704 | #define I2C_SR2_BUSY              I2C_SR2_BUSY_Msk                             /*!<Bus Busy                                        */
+      | 
+../Core/Src/I2C_u.h:87: warning: "I2C_SR2_TRA" redefined
+   87 | #define I2C_SR2_TRA         2
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3707: note: this is the location of the previous definition
+ 3707 | #define I2C_SR2_TRA               I2C_SR2_TRA_Msk                              /*!<Transmitter/Receiver                            */
+      | 
+../Core/Src/I2C_u.h:88: warning: "I2C_SR2_DUALF" redefined
+   88 | #define I2C_SR2_DUALF       7
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3719: note: this is the location of the previous definition
+ 3719 | #define I2C_SR2_DUALF             I2C_SR2_DUALF_Msk                            /*!<Dual Flag (Slave mode)                          */
+      | 
+../Core/Src/I2C_u.h:91: warning: "I2C_CCR_CCR" redefined
+   91 | #define I2C_CCR_CCR         0
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3727: note: this is the location of the previous definition
+ 3727 | #define I2C_CCR_CCR               I2C_CCR_CCR_Msk                              /*!<Clock Control Register in Fast/Standard mode (Master mode) */
+      | 
+../Core/Src/I2C_u.h:92: warning: "I2C_CCR_DUTY" redefined
+   92 | #define I2C_CCR_DUTY        14
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3730: note: this is the location of the previous definition
+ 3730 | #define I2C_CCR_DUTY              I2C_CCR_DUTY_Msk                             /*!<Fast Mode Duty Cycle                                       */
+      | 
+../Core/Src/I2C_u.h:93: warning: "I2C_CCR_FS" redefined
+   93 | #define I2C_CCR_FS          15
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:3733: note: this is the location of the previous definition
+ 3733 | #define I2C_CCR_FS                I2C_CCR_FS_Msk                               /*!<I2C Master Mode Selection                                  */
+      | 
+../Core/Src/USART.h:39: warning: "USART2" redefined
+   39 | #define USART2          (USART_RegDef_t*)USART2_BASE_ADDR
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:759: note: this is the location of the previous definition
+  759 | #define USART2              ((USART_TypeDef *) USART2_BASE)
+      | 
+../Core/Src/USART.h:110: warning: "USART_SR_RXNE" redefined
+  110 | #define USART_SR_RXNE        5
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:6623: note: this is the location of the previous definition
+ 6623 | #define USART_SR_RXNE                 USART_SR_RXNE_Msk                        /*!<Read Data Register Not Empty */
+      | 
+../Core/Src/USART.h:111: warning: "USART_SR_TC" redefined
+  111 | #define USART_SR_TC          6
+      | 
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xe.h:6626: note: this is the location of the previous definition
+ 6626 | #define USART_SR_TC                   USART_SR_TC_Msk                          /*!<Transmission Complete        */
+      | 
+../Core/Src/USART.c: In function 'UART_SendInt':
+../Core/Src/USART.c:80:5: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+   80 |     sprintf(buffer, "0x%x", num);
+      |     ^~~~~~~
+../Core/Src/USART.c:8:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+    7 | #include"USART.h"
+  +++ |+#include <stdio.h>
+    8 | 
+../Core/Src/USART.c:80:5: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
+   80 |     sprintf(buffer, "0x%x", num);
+      |     ^~~~~~~
+../Core/Src/USART.c:80:5: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/USART.c:80:13: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
+   80 |     sprintf(buffer, "0x%x", num);
+      |             ^~~~~~
+      |             |
+      |             unsigned char *
+../Core/Src/USART.c:80:13: note: expected 'char *' but argument is of type 'unsigned char *'
+../Core/Src/USART.c:80:25: warning: format '%x' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+   80 |     sprintf(buffer, "0x%x", num);
+      |                        ~^   ~~~
+      |                         |   |
+      |                         |   uint32_t {aka long unsigned int}
+      |                         unsigned int
+      |                        %lx
+../Core/Src/USART.c:81:29: warning: pointer targets in passing argument 2 of 'UART_SendString' differ in signedness [-Wpointer-sign]
+   81 |     UART_SendString(pUARTx, buffer);
+      |                             ^~~~~~
+      |                             |
+      |                             unsigned char *
+../Core/Src/USART.c:72:58: note: expected 'const char *' but argument is of type 'unsigned char *'
+   72 | void UART_SendString(USART_RegDef_t *pUARTx, const char *str){
+      |                                              ~~~~~~~~~~~~^~~
 arm-none-eabi-g++ -o "PRJ_001.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Administrator\STM32CubeIDE\workspace_1.18.1\PRJ_001\STM32F401VEHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PRJ_001.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 Finished building target: PRJ_001.elf
  
@@ -52,7 +290,7 @@ arm-none-eabi-size  PRJ_001.elf
 arm-none-eabi-objdump -h -S PRJ_001.elf  > "PRJ_001.list"
 arm-none-eabi-objcopy  -O ihex PRJ_001.elf  "PRJ_001.hex"
    text	   data	    bss	    dec	    hex	filename
-  14876	    112	   2160	  17148	   42fc	PRJ_001.elf
+  12276	    112	   1992	  14380	   382c	PRJ_001.elf
 Finished building: default.size.stdout
  
 Finished building: PRJ_001.hex
@@ -60,5 +298,5 @@ Finished building: PRJ_001.hex
 Finished building: PRJ_001.list
  
 
-09:42:43 Build Finished. 0 errors, 6 warnings. (took 816ms)
+11:31:43 Build Finished. 0 errors, 45 warnings. (took 1s.10ms)
 

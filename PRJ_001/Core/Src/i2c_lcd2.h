@@ -13,7 +13,6 @@ extern "C" {
 #endif
 
 #include "stm32f411.h"
-#include "I2C_u.h"
 
 void i2c_Config();
 void i2c_lcd_init();

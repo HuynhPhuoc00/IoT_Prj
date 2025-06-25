@@ -1,0 +1,7 @@
+../Core/Src/USART.c:12:13:Config_GPIO_USART	1
+../Core/Src/USART.c:35:6:USART_Init	4
+../Core/Src/USART.c:66:6:USART_SendChar	3
+../Core/Src/USART.c:72:6:UART_SendString	2
+../Core/Src/USART.c:78:6:UART_SendInt	1
+../Core/Src/USART.c:85:9:UART_ReceiveChar	2
+../Core/Src/USART.c:90:16:USART_GetFlagStatus	2

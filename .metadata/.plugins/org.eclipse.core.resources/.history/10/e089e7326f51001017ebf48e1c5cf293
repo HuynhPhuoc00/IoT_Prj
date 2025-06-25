@@ -1,0 +1,12 @@
+/*
+ * dht11.c
+ *
+ *  Created on: Jun 25, 2025
+ *      Author: Administrator
+ */
+
+#include "dht11.h"
+
+void IO_Config(){
+
+}

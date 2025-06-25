@@ -3,6 +3,8 @@
 "./Core/Src/GPIO.o"
 "./Core/Src/I2C_u.o"
 "./Core/Src/Room.o"
+"./Core/Src/USART.o"
+"./Core/Src/dht11.o"
 "./Core/Src/i2c_lcd2.o"
 "./Core/Src/lcd.o"
 "./Core/Src/main.o"

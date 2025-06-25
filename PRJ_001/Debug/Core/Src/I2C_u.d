@@ -27,7 +27,7 @@ Core/Src/I2C_u.o: ../Core/Src/I2C_u.c ../Core/Src/stm32f411.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Core/Src/GPIO.h ../Core/Src/I2C_u.h ../Core/Src/lcd.h \
- ../Core/Src/74HC595.h
+ ../Core/Src/74HC595.h ../Core/Src/USART.h
 ../Core/Src/stm32f411.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -60,3 +60,4 @@ Core/Src/I2C_u.o: ../Core/Src/I2C_u.c ../Core/Src/stm32f411.h \
 ../Core/Src/I2C_u.h:
 ../Core/Src/lcd.h:
 ../Core/Src/74HC595.h:
+../Core/Src/USART.h:

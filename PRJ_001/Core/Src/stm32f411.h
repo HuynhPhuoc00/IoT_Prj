@@ -162,8 +162,8 @@ void delay_us(uint32_t us);
 	} while(0)
 
 #include "GPIO.h"
-//#include "I2C.h"
-//#include "USART.h"
+#include "I2C_u.h"
+#include "USART.h"
 //#include "SPI.h"
 
 #endif /* INC_STM32F411_H_ */

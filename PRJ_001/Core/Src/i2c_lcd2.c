@@ -78,7 +78,7 @@ void i2c_send_string(char *data){
 }
 
 void i2c_lcd_clear(){
-	i2c_send_cmd_lcd(0x01);delay_ms(1);
+	i2c_send_cmd_lcd(0x01);delay_ms(2);
 }
 
 void i2c_lcd_put_cur(int row, int col){

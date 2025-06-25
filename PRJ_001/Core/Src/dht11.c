@@ -1,0 +1,21 @@
+/*
+ * dht11.c
+ *
+ *  Created on: Jun 25, 2025
+ *      Author: Administrator
+ */
+
+#include "dht11.h"
+
+GPIO_Handle_t PE9;
+
+void IO_Config(){
+//	PE9.pGPIOx = GPIOE;
+//	PB8.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_9;
+//	PB8.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_INPUT;
+//	PB8.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_OD;
+//	PB8.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_VERYHIGH;
+//	PB8.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+//	PB8.GPIO_Pin_Config.GPIO_PinAltFunMode_High = GPIO_AFRH_AF4;
+//	GPIO_Init(&PB8);
+}
