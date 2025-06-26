@@ -5,11 +5,23 @@
  *      Author: Administrator
  */
 
-#ifndef SRC_DHT11_H_
-#define SRC_DHT11_H_
+#ifndef INC_DHT11_H_
+#define INC_DHT11_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include "stm32f411.h"
 
-void IO_Config();
 
-#endif /* SRC_DHT11_H_ */
+uint8_t start_dht(void);
+uint8_t CheckResponse();
+uint8_t Read_DHT();
+uint8_t CheckSum();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* INC_DHT11_H_ */

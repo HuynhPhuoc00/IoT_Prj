@@ -144,22 +144,23 @@ void delay_us(uint32_t us);
 #define SYSTICK_LOAD (SystemCoreClock/1000000U)
 #define SYSTICK_DELAY_CALIB (SYSTICK_LOAD >> 1)
 
-#define delay_us(us)	\
-	do{	\
-		CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;	\
-		DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;	\
-		uint32_t start = DWT->CYCCNT;	\
-		uint32_t ticks = (SystemCoreClock / 1000000) * us;	\
-		while ((DWT->CYCCNT - start) < ticks);	\
-	} while(0)
+void DWT_Init(void);
 
+#define delay_us(us)                            \
+    do {                                        \
+        uint32_t start_cycles = DWT->CYCCNT;    \
+        /* Calculate target cycles. SystemCoreClock is in Hz. Divide by 1,000,000 for us. */ \
+        uint32_t target_cycles = (SystemCoreClock / 1000000U) * (us); \
+        /* Wait until the target number of cycles has passed */ \
+        while ((DWT->CYCCNT - start_cycles) < target_cycles); \
+    } while(0)
 
-#define delay_ms(ms)	\
-	do{	\
-		for (uint32_t i = 0; i < ms; ++i) {	\
-			delay_us(1000);	\
-		}	\
-	} while(0)
+#define delay_ms(ms)                            \
+    do {                                        \
+        for (uint32_t i = 0; i < ms; ++i) {     \
+            delay_us(1000);                     \
+        }                                       \
+    } while(0)
 
 #include "GPIO.h"
 #include "I2C_u.h"

@@ -1,0 +1,67 @@
+/*
+ * dht11.c
+ *
+ *  Created on: Jun 25, 2025
+ *      Author: Administrator
+ */
+
+#include "dht11.h"
+
+GPIO_Handle_t DHT11_Pin;
+
+static void IO_Write(uint8_t RoW);
+static void IO_Write(uint8_t RoW){
+	GPIOE_PCLK_EN;
+	DHT11_Pin.pGPIOx = GPIOE;
+	DHT11_Pin.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_9;
+	DHT11_Pin.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_LOW;
+	DHT11_Pin.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	DHT11_Pin.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+
+	if (RoW == Read){
+		DHT11_Pin.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_INPUT;
+	}else{
+		DHT11_Pin.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	}
+	GPIO_Init(&DHT11_Pin);
+}
+
+void start_dht(void){
+	uint8_t Timeout = 100;
+	uint8_t Data[5];
+	IO_Write(Write);
+	uint8_t Response = 0;
+
+
+	// MCU Sends out Start Signal to DHT
+	GPIO_WriteToOutPutPin(DHT11_Pin.pGPIOx, 9, Low);
+	delay_ms(20);
+	GPIO_WriteToOutPutPin(DHT11_Pin.pGPIOx, 9, High);
+
+	IO_Write(Read);
+
+	CheckResponse();
+
+
+}
+
+uint8_t CheckResponse(){
+	//Check response
+	delay_us(40);
+
+	if (!(GPIO_ReadFromInputPin(DHT11_Pin.pGPIOx, 9))){	// Check DHT pin low
+		delay_us(80);
+		if (!GPIO_ReadFromInputPin(DHT11_Pin.pGPIOx, 9)){	// Check DHT pin high
+			return -1;
+		}
+		while (GPIO_ReadFromInputPin(DHT11_Pin.pGPIOx, 9));	// Wait DHT pin low
+	}
+	else{
+		return -1;
+	}
+	return 1;
+}
+
+uint8_t Read_DHT(){
+
+}

@@ -13,7 +13,7 @@
 #include "i2c_lcd2.h"
 #include "74HC595.h"
 #include "lcd.h"
-
+#include "dht11.h"
 enum Room_ID{
 	em_LV_R = 2,
 	em_KC_R = 3,

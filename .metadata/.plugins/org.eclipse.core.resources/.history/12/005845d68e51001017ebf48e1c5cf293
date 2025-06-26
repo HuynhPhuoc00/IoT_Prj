@@ -1,0 +1,30 @@
+/*
+ * dht11.h
+ *
+ *  Created on: Jun 25, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_DHT11_H_
+#define SRC_DHT11_H_
+
+#include "stm32f411.h"
+
+void IO_Config();
+uint8_t start_dht11();
+
+typedef enum {
+    I2C_ERR_NONE     = 0x00,
+    I2C_ERR_ADDR     = 0x01,
+    I2C_ERR_TXE      = 0x02,
+    I2C_ERR_BTF      = 0x04,
+    I2C_ERR_ACKFAIL  = 0x08,
+    I2C_ERR_ARLO     = 0x10,
+    I2C_ERR_BUS      = 0x20
+} I2C_ErrorFlags;
+
+typedef struct {
+    uint8_t errorFlags;
+} I2C_Error_t;
+
+#endif /* SRC_DHT11_H_ */

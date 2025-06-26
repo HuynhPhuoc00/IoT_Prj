@@ -3,5 +3,5 @@
 ../Core/Src/USART.c:66:6:USART_SendChar	16	static
 ../Core/Src/USART.c:72:6:UART_SendString	16	static
 ../Core/Src/USART.c:78:6:UART_SendInt	32	static
-../Core/Src/USART.c:85:9:UART_ReceiveChar	16	static
-../Core/Src/USART.c:90:16:USART_GetFlagStatus	16	static
+../Core/Src/USART.c:86:9:UART_ReceiveChar	16	static
+../Core/Src/USART.c:91:16:USART_GetFlagStatus	16	static

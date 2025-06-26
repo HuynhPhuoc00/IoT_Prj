@@ -1,0 +1,15 @@
+/*
+ * dht11.h
+ *
+ *  Created on: Jun 25, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_DHT11_H_
+#define SRC_DHT11_H_
+
+#include "stm32f411.h"
+
+void IO_Config();
+
+#endif /* SRC_DHT11_H_ */

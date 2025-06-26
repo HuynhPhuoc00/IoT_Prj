@@ -2,3 +2,4 @@
 ../Core/Src/stm32f411.c:17:10:RCC_GetPCLK1Value	6
 ../Core/Src/stm32f411.c:53:10:RCC_GetPCLK2Value	6
 ../Core/Src/stm32f411.c:90:10:RCC_GetSystemClock	3
+../Core/Src/stm32f411.c:97:6:DWT_Init	1

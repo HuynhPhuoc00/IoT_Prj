@@ -1,0 +1,24 @@
+/*
+ * dht11.h
+ *
+ *  Created on: Jun 25, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_DHT11_H_
+#define SRC_DHT11_H_
+
+#include "stm32f411.h"
+
+void IO_Write(uint8_t RoW);
+uint8_t read_dht11();
+
+typedef enum {
+    DHT11_DontReponse	= 0x00,
+} DHT11_ErrorFlags;
+
+typedef struct {
+    uint8_t errorFlags;
+} DHT11_Error_t;
+
+#endif /* SRC_DHT11_H_ */

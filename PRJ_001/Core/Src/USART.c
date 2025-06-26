@@ -77,8 +77,9 @@ void UART_SendString(USART_RegDef_t *pUARTx, const char *str){
 
 void UART_SendInt(USART_RegDef_t *pUARTx, uint32_t num) {
     unsigned char buffer[12];
-    sprintf(buffer, "0x%x", num);
+    sprintf(buffer, "%d", num);
     UART_SendString(pUARTx, buffer);
+    UART_SendString(pUARTx, "\r\n");
 }
 
 

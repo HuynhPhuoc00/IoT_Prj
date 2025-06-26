@@ -9,6 +9,9 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\Administrator\Downloads\STM32F4_DHT11\STM32F4_DHT11_22_DS18B20"/>
+			<item value="C:\Users\Administrator\Downloads\STM32F4_DHT11"/>
+			<item value="C:\Users\Administrator\Downloads\STM32F4_DHT11\STM32F4_DHT11_22_DS18B20\Drivers"/>
 			<item value="C:\Users\Administrator\Documents\PRJ_001"/>
 			<item value="C:\Users\Administrator\Documents\STM32F411VET6-DISCO"/>
 			<item value="C:\Users\Administrator\Documents\STM32F411VET6-DISCO-main"/>

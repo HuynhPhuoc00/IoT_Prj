@@ -94,3 +94,13 @@ uint32_t RCC_GetSystemClock(void) {
     return Get_Output_CLK();              // PLL
 }
 
+void DWT_Init(void) {
+    // Enable TRC (Trace and Debug)
+    CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+
+    // Reset Cycle Counter
+    DWT->CYCCNT = 0;
+
+    // Enable Cycle Counter
+    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+}

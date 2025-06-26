@@ -1,0 +1,10 @@
+05:43:28 **** Incremental Build of configuration Debug for project STM32F4_DHT11_22_DS18B20 ****
+make -j4 all 
+arm-none-eabi-size  STM32F4_DHT11_22_DS18B20.elf 
+   text	   data	    bss	    dec	    hex	filename
+  27080	    468	   2084	  29632	   73c0	STM32F4_DHT11_22_DS18B20.elf
+Finished building: default.size.stdout
+ 
+
+05:43:28 Build Finished. 0 errors, 0 warnings. (took 249ms)
+

@@ -22,7 +22,6 @@
 //#include "GPIO.h"
 #include "Room.h"
 #include "stm32f411.h"
-#include "tim.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -77,9 +76,8 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
   /* USER CODE BEGIN Init */
-
+  DWT_Init();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -90,24 +88,18 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-//  MX_I2C1_Init();
-  MX_TIM1_Init();
-
 
 	usart.pUSARTx = USART2;
 	usart.USART_Config.USART_Baud = USART_STD_BAUD_9600;
 	USART_Init(&usart);
-	uint32_t a = 0x1f2f3f4f;
-
-	UART_SendInt(USART2, a);
   /* USER CODE BEGIN 2 */
-//	Room LVR("Living Room");
+	Room LVR("Living Room");
 //	Room KTR("Kitchen Room");
 //	Room BR("Bed Room");
 //	LVR.TurnOnLed(Room::em_Led1);
 //	KTR.TurnOnLed(Room::em_Led2);
 //	BR.TurnOnLed(Room::em_Led3);
-
+//
 //	i2c_lcd_clear();
 //
 //	i2c_lcd_put_cur(0,0);
@@ -115,8 +107,16 @@ int main(void)
 //
 //	i2c_lcd_put_cur(1,0);
 //	i2c_send_string("Init LCD succes"); // Test
-
-
+//
+//	delay_ms(5000);
+//
+//	i2c_lcd_clear();
+//
+//	i2c_lcd_put_cur(0,0);
+//	i2c_send_string("Init LCD2 succes"); // Test
+//
+//	i2c_lcd_put_cur(1,0);
+//	i2c_send_string("Init LCD2 succes"); // Test
 
   /* USER CODE END 2 */
 

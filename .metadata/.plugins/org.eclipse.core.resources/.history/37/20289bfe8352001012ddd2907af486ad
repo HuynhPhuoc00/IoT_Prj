@@ -1,0 +1,194 @@
+/*
+ * dht11.c
+ *
+ * Created on: Jun 25, 2025
+ * Author: Administrator
+ */
+
+#include "dht11.h"
+
+// External declarations for GPIO and UART functions (assuming they are defined elsewhere)
+// For example:
+// #include "stm32f4xx_gpio_driver.h" // Replace with your actual GPIO driver header
+// #include "stm32f4xx_uart_driver.h" // Replace with your actual UART driver header
+// #include "stm32f4xx_timers.h" // For delay functions
+
+// Define constants for GPIO pin operations for clarity
+#define Read 0
+#define Write 1
+#define Low 0
+#define High 1
+
+// Global GPIO Handle for DHT11 pin
+GPIO_Handle_t DHT11_Pin;
+
+/**
+ * @brief Configures the DHT11 pin for read or write mode.
+ * @param RoW: Read (0) or Write (1) mode.
+ */
+static void IO_Write(uint8_t RoW) {
+    // Ensure GPIOE peripheral clock is enabled (replace with your specific clock enable macro)
+    GPIOE_PCLK_EN;
+
+    DHT11_Pin.pGPIOx = GPIOE; // Assuming DHT11 is connected to GPIOE
+    DHT11_Pin.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_9; // Assuming DHT11 is on Pin 9
+    DHT11_Pin.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_LOW; // Low speed is generally sufficient
+    DHT11_Pin.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP; // Push-pull output type
+    DHT11_Pin.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU; // Enable internal pull-up resistor
+
+    if (RoW == Read) {
+        // Configure pin as input to read data from DHT11
+        DHT11_Pin.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_INPUT;
+    } else {
+        // Configure pin as output to send commands to DHT11
+        DHT11_Pin.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+    }
+    // Initialize the GPIO pin with the configured settings
+    GPIO_Init(&DHT11_Pin);
+}
+
+/**
+ * @brief Measures the duration (in microseconds) for which a pin stays in a target state.
+ * @param GPIOx: Pointer to the GPIO port.
+ * @param PinNumber: The pin number.
+ * @param target_state: The state (Low/High) to wait for.
+ * @param max_timeout_us: Maximum time to wait before timing out.
+ * @return The duration in microseconds, or 0 if timeout occurs.
+ */
+static uint32_t measure_pulse_width(GPIO_TypeDef *GPIOx, uint16_t PinNumber, uint8_t target_state, uint32_t max_timeout_us) {
+    uint32_t count = 0;
+    // Wait for the pin to reach the target_state
+    while (GPIO_ReadFromInputPin(GPIOx, PinNumber) != target_state) {
+        if (count++ >= max_timeout_us) {
+            return 0; // Timeout
+        }
+        delay_us(1); // Increment counter every microsecond
+    }
+    return count; // Return the time it took to reach the target state
+}
+
+/**
+ * @brief Starts communication with the DHT11 sensor and reads sensor data.
+ * @return 1 on success, -1 on failure.
+ */
+uint8_t start_dht(void) {
+    uint32_t pulse_duration_us; // To store measured pulse durations
+    uint8_t Data[5] = {0};       // Array to store 5 bytes of received data (RH_int, RH_dec, T_int, T_dec, Checksum)
+    uint64_t received_data = 0;   // Use uint64_t to store all 40 bits of data
+
+    // --- 1. MCU Sends Start Signal to DHT11 ---
+    IO_Write(Write); // Set DHT pin as output
+    GPIO_WriteToOutPutPin(DHT11_Pin.pGPIOx, GPIO_PIN_NUM_9, Low); // Pull data line LOW
+    delay_ms(18); // Hold LOW for at least 18ms (DHT11 requires 18ms minimum start signal)
+    GPIO_WriteToOutPutPin(DHT11_Pin.pGPIOx, GPIO_PIN_NUM_9, High); // Pull data line HIGH
+    delay_us(30); // Hold HIGH for 20-40us before releasing (MCU prepares for response)
+
+    // --- 2. Change to Input Mode to Read DHT11's Response ---
+    IO_Write(Read); // Set DHT pin as input to listen for DHT11's response
+
+    // --- 3. Check DHT11 Response (pulls low for ~80us, then high for ~80us) ---
+
+    // Wait for DHT11 to pull pin LOW (response start, typically ~80us)
+    pulse_duration_us = measure_pulse_width(DHT11_Pin.pGPIOx, GPIO_PIN_NUM_9, Low, 100);
+    if (pulse_duration_us == 0) {
+        UART_SendString(USART2, "DHT Timeout: No response LOW from sensor\r\n");
+        return -1;
+    }
+    // UART_SendString(USART2, "DHT Response LOW detected\r\n"); // For debugging
+
+    // Wait for DHT11 to pull pin HIGH (response end, typically ~80us)
+    pulse_duration_us = measure_pulse_width(DHT11_Pin.pGPIOx, GPIO_PIN_NUM_9, High, 100);
+    if (pulse_duration_us == 0) {
+        UART_SendString(USART2, "DHT Timeout: No response HIGH from sensor\r\n");
+        return -1;
+    }
+    // UART_SendString(USART2, "DHT Response HIGH detected\r\n"); // For debugging
+
+    // Wait for DHT11 to pull pin LOW again (after response, before actual data bits start)
+    pulse_duration_us = measure_pulse_width(DHT11_Pin.pGPIOx, GPIO_PIN_NUM_9, Low, 100);
+    if (pulse_duration_us == 0) {
+        UART_SendString(USART2, "DHT Timeout: No data start LOW from sensor\r\n");
+        return -1;
+    }
+    // UART_SendString(USART2, "DHT Data start LOW detected\r\n"); // For debugging
+
+    // --- 4. Read 40 Bits of Data (5 bytes: RH_int, RH_dec, T_int, T_dec, Checksum) ---
+    for (int i = 0; i < 40; i++) {
+        // Each bit starts with a ~50us LOW period from DHT11
+        // Wait for DHT11 pin to go LOW (beginning of bit's 50us LOW pulse)
+        pulse_duration_us = measure_pulse_width(DHT11_Pin.pGPIOx, GPIO_PIN_NUM_9, Low, 70); // Max 70us for the 50us low pulse
+        if (pulse_duration_us == 0) {
+            UART_SendString(USART2, "Timeout: Bit LOW start during data read\r\n");
+            return -1;
+        }
+
+        // Wait for DHT11 pin to go HIGH (beginning of data pulse)
+        pulse_duration_us = measure_pulse_width(DHT11_Pin.pGPIOx, GPIO_PIN_NUM_9, High, 70); // Max 70us for this transition
+        if (pulse_duration_us == 0) {
+            UART_SendString(USART2, "Timeout: Bit HIGH start during data read\r\n");
+            return -1;
+        }
+
+        // Now, measure the duration of the HIGH pulse to determine the bit value
+        uint32_t high_pulse_duration = 0;
+        // Keep counting as long as the pin is HIGH, up to a reasonable maximum
+        while (GPIO_ReadFromInputPin(DHT11_Pin.pGPIOx, GPIO_PIN_NUM_9) == High) {
+            if (high_pulse_duration++ >= 90) { // Max 90us for high pulse (70us for '1' + some margin)
+                UART_SendString(USART2, "Timeout: High data pulse too long\r\n");
+                return -1; // High pulse too long, indicates an error or stuck high
+            }
+            delay_us(1); // Increment counter for each microsecond the pin is high
+        }
+
+        received_data <<= 1; // Shift the received_data left to make space for the new bit
+
+        // Determine the bit value based on the high pulse duration
+        if (high_pulse_duration > 40) { // If high for > 40us (e.g., ~70us), it's a '1'
+            received_data |= 1; // Set the last bit to 1
+            // UART_SendString(USART2, "1"); // For debugging
+        } else { // If high for <= 40us (e.g., ~26-28us), it's a '0'
+            // UART_SendString(USART2, "0"); // For debugging
+        }
+    }
+    // UART_SendString(USART2, "\r\n"); // For debugging, new line after 40 bits
+
+    // --- 5. Parse the Received 40 Bits into 5 Bytes ---
+    Data[0] = (uint8_t)((received_data >> 32) & 0xFF); // Integer part of Relative Humidity
+    Data[1] = (uint8_t)((received_data >> 24) & 0xFF); // Decimal part of Relative Humidity
+    Data[2] = (uint8_t)((received_data >> 16) & 0xFF); // Integer part of Temperature
+    Data[3] = (uint8_t)((received_data >> 8) & 0xFF);  // Decimal part of Temperature
+    Data[4] = (uint8_t)(received_data & 0xFF);       // Checksum byte
+
+    UART_SendString(USART2, "Raw Received Data Bytes:\r\n");
+    UART_SendString(USART2, "RH_Int: "); UART_SendInt(USART2, Data[0]); UART_SendString(USART2, "\r\n");
+    UART_SendString(USART2, "RH_Dec: "); UART_SendInt(USART2, Data[1]); UART_SendString(USART2, "\r\n");
+    UART_SendString(USART2, "Temp_Int: "); UART_SendInt(USART2, Data[2]); UART_SendString(USART2, "\r\n");
+    UART_SendString(USART2, "Temp_Dec: "); UART_SendInt(USART2, Data[3]); UART_SendString(USART2, "\r\n");
+    UART_SendString(USART2, "Checksum: "); UART_SendInt(USART2, Data[4]); UART_SendString(USART2, "\r\n");
+
+    // --- 6. Checksum Verification ---
+    uint8_t calculated_checksum = Data[0] + Data[1] + Data[2] + Data[3];
+    if (calculated_checksum == Data[4]) {
+        UART_SendString(USART2, "Checksum OK! Data is valid.\r\n");
+        // Display actual humidity and temperature
+        UART_SendString(USART2, "Humidity: ");
+        UART_SendInt(USART2, Data[0]);
+        UART_SendString(USART2, ".");
+        UART_SendInt(USART2, Data[1]);
+        UART_SendString(USART2, "%\r\n");
+
+        UART_SendString(USART2, "Temperature: ");
+        UART_SendInt(USART2, Data[2]);
+        UART_SendString(USART2, ".");
+        UART_SendInt(USART2, Data[3]);
+        UART_SendString(USART2, "C\r\n");
+        return 1; // Success
+    } else {
+        UART_SendString(USART2, "Checksum Error! Received: ");
+        UART_SendInt(USART2, Data[4]);
+        UART_SendString(USART2, ", Calculated: ");
+        UART_SendInt(USART2, calculated_checksum);
+        UART_SendString(USART2, "\r\n");
+        return -1; // Failure due to checksum mismatch
+    }
+}
