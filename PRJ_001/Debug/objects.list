@@ -6,6 +6,7 @@
 "./Core/Src/USART.o"
 "./Core/Src/dht11.o"
 "./Core/Src/i2c_lcd2.o"
+"./Core/Src/keyboard.o"
 "./Core/Src/lcd.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32f411.o"

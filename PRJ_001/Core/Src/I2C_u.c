@@ -41,28 +41,16 @@ static void I2C_GenrateStopCondition(I2C_RegDef_t *pI2Cx){
 // Enable GPIO for I2C
 static void Config_GPIO_I2C(){
 	GPIOB_PCLK_EN;
-	// Enable port PB8
-	GPIO_Handle_t PB8;	// SCL
-	PB8.pGPIOx = GPIOB;
-	PB8.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_8;
-	PB8.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_ALTFM;
-	PB8.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_OD;
-	PB8.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_VERYHIGH;
-	PB8.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
-	PB8.GPIO_Pin_Config.GPIO_PinAltFunMode_High = GPIO_AFRH_AF4;
-	GPIO_Init(&PB8);
-
-	// Enable port PB9
-	GPIO_Handle_t PB9;	// SDA
-	PB9.pGPIOx = GPIOB;
-	PB9.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_9;
-	PB9.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_ALTFM;
-	PB9.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_OD;
-	PB9.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_VERYHIGH;
-	PB9.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
-	PB9.GPIO_Pin_Config.GPIO_PinAltFunMode_High = GPIO_AFRH_AF4;
-	GPIO_Init(&PB9);
-
+	// Enable port PB8, PB9
+	GPIO_Handle_t SCL_SDA;	// PB8, PB9
+	SCL_SDA.pGPIOx = GPIOB;
+	SCL_SDA.GPIO_Pin_Config.GPIO_PinNumber = PIN_NUM_8 | PIN_NUM_9;
+	SCL_SDA.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_ALTFM;
+	SCL_SDA.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_OD;
+	SCL_SDA.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_VERYHIGH;
+	SCL_SDA.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	SCL_SDA.GPIO_Pin_Config.GPIO_PinAltFunMode_High = GPIO_AFRH_AF4;
+	GPIO_Init(&SCL_SDA);
 }
 
 

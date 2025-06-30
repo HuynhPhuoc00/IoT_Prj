@@ -15,7 +15,7 @@ extern "C" {
 #include "stm32f411.h"
 
 
-uint8_t start_dht(void);
+uint8_t start_dht();
 uint8_t CheckResponse();
 uint8_t Read_DHT();
 uint8_t CheckSum();

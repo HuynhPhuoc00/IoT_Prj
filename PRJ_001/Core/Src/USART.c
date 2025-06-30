@@ -11,25 +11,15 @@ static uint8_t USART_GetFlagStatus(USART_RegDef_t *pUARTx,uint32_t FlagName);
 // Enable GPIO for I2C
 static void Config_GPIO_USART(){
 	GPIOA_PCLK_EN;
-	GPIO_Handle_t PA2;	// TX
-	PA2.pGPIOx = GPIOA;
-	PA2.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_2;
-	PA2.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_ALTFM;
-	PA2.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
-	PA2.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
-	PA2.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_NOPUPD;
-	PA2.GPIO_Pin_Config.GPIO_PinAltFunMode_Low = GPIO_AFRL_AF7;
-	GPIO_Init(&PA2);
-
-	GPIO_Handle_t PA3;	// RX
-	PA3.pGPIOx = GPIOA;
-	PA3.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_NUM_3;
-	PA3.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_ALTFM;
-	PA3.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
-	PA3.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
-	PA3.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_NOPUPD;
-	PA3.GPIO_Pin_Config.GPIO_PinAltFunMode_Low = GPIO_AFRL_AF7;
-	GPIO_Init(&PA3);
+	GPIO_Handle_t TX_RX;	// PA2, PA3
+	TX_RX.pGPIOx = GPIOA;
+	TX_RX.GPIO_Pin_Config.GPIO_PinNumber = PIN_NUM_2 | PIN_NUM_3;
+	TX_RX.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_ALTFM;
+	TX_RX.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	TX_RX.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
+	TX_RX.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_NOPUPD;
+	TX_RX.GPIO_Pin_Config.GPIO_PinAltFunMode_Low = GPIO_AFRL_AF7;
+	GPIO_Init(&TX_RX);
 }
 
 void USART_Init(USART_Handle_t *pUSARTHandle)

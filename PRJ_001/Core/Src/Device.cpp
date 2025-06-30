@@ -34,7 +34,9 @@ Device::Device(std::string name){
 //		lcd_init();
 //		i2c_lcd_init();
 	}
-	start_dht();
+//	start_dht();
+//	Read_DHT();
+
 }
 
 Device::~Device() {}

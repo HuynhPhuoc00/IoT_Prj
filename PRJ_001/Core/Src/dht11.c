@@ -23,7 +23,7 @@ static void IO_Write(uint8_t RoW){
 	}else{
 		DHT11_Pin.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
 	}
-	GPIO_Init(&DHT11_Pin);
+	GPIO_Init_Pin(&DHT11_Pin, 9);
 }
 
 uint8_t start_dht(void){

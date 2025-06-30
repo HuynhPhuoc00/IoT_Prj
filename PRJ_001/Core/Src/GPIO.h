@@ -16,7 +16,7 @@ extern "C" {
 
 //GPIO Type
 typedef struct{
-    uint8_t GPIO_PinNumber;			//
+    uint16_t GPIO_PinNumber;			//
     uint8_t GPIO_PinMode;           //
     uint8_t GPIO_PinSpeed;			// tốc độ truyền dữ liệu trên chân GPIO.
     uint8_t GPIO_PinPuPdControl;	// kiểm soát điện trở kéo lên hoặc kéo xuống trên chân GPIO.
@@ -48,6 +48,23 @@ typedef struct{
 #define GPIO_PIN_NUM_13		            13
 #define GPIO_PIN_NUM_14		            14
 #define GPIO_PIN_NUM_15		            15
+
+#define PIN_NUM_0		          (1 << GPIO_PIN_NUM_0)
+#define PIN_NUM_1		          (1 << GPIO_PIN_NUM_1)
+#define PIN_NUM_2		          (1 << GPIO_PIN_NUM_2)
+#define PIN_NUM_3		          (1 << GPIO_PIN_NUM_3)
+#define PIN_NUM_4		          (1 << GPIO_PIN_NUM_4)
+#define PIN_NUM_5		          (1 << GPIO_PIN_NUM_5)
+#define PIN_NUM_6		          (1 << GPIO_PIN_NUM_6)
+#define PIN_NUM_7		          (1 << GPIO_PIN_NUM_7)
+#define PIN_NUM_8		          (1 << GPIO_PIN_NUM_8)
+#define PIN_NUM_9		          (1 << GPIO_PIN_NUM_9)
+#define PIN_NUM_10		          (1 << GPIO_PIN_NUM_10)
+#define PIN_NUM_11		          (1 << GPIO_PIN_NUM_11)
+#define PIN_NUM_12		          (1 << GPIO_PIN_NUM_12)
+#define PIN_NUM_13		          (1 << GPIO_PIN_NUM_13)
+#define PIN_NUM_14		          (1 << GPIO_PIN_NUM_14)
+#define PIN_NUM_15		          (1 << GPIO_PIN_NUM_15)
 
 // GPIO port mode register
 #define GPIO_MODER_INPUT                0
@@ -105,9 +122,7 @@ void GPIO_WriteToOutPutPin(GPIO_RegDef_t *pGPIOx, uint8_t GPIO_PinNumber, uint8_
 void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t Value);
 void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx,uint8_t GPIO_PinNumber);
 
-// Delay
-void delay();
-
+void GPIO_Init_Pin(GPIO_Handle_t *pGPIOHandel, uint8_t Pin_Number);
 #ifdef __cplusplus
 }
 #endif
