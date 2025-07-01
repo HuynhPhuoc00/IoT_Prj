@@ -1,0 +1,46 @@
+/*
+ * keyboard.h
+ *
+ *  Created on: Jun 27, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_KEYBOARD_H_
+#define SRC_KEYBOARD_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "stm32f411.h"
+
+extern GPIO_Handle_t Key_Pin;
+
+/*
+ * Key 0 	= R1 C1
+ * Key 1 	= R1 C2
+ * Key 2 	= R1 C3
+ * Key 3 	= R1 C4
+ * Key 4 	= R2 C1
+ * Key 5 	= R2 C2
+ * Key 6 	= R2 C3
+ * Key 7 	= R2 C4
+ * Key 8 	= R3 C1
+ * Key 9 	= R3 C2
+ * Key 10 	= R3 C3
+ * Key 11 	= R3 C4
+ * Key 12 	= R4 C1
+ * Key 13 	= R4 C2
+ * Key 14 	= R4 C3
+ * Key 15 	= R4 C4
+ * */
+
+
+void Config_Pin();
+char ReadKey(uint8_t KeyRow, uint8_t KeyCol);
+void test();
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* SRC_KEYBOARD_H_ */

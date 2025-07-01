@@ -1,6 +1,0 @@
-../Core/Inc/SPI.c:10:13:Config_GPIO_SPI	1
-../Core/Inc/SPI.c:45:9:GetBaudRate	3
-../Core/Inc/SPI.c:55:6:SPI_Init	1
-../Core/Inc/SPI.c:77:6:SPI_Transmit	4
-../Core/Inc/SPI.c:85:6:SPI_Receive	4
-../Core/Inc/SPI.c:96:16:SPI_GetFlagStatus	2

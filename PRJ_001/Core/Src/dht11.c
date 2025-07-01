@@ -23,7 +23,7 @@ static void IO_Write(uint8_t RoW){
 	}else{
 		DHT11_Pin.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
 	}
-	GPIO_Init_Pin(&DHT11_Pin, 9);
+	GPIO_Init_Pin(&DHT11_Pin);
 }
 
 uint8_t start_dht(void){
@@ -71,7 +71,6 @@ uint8_t Read_DHT(){
 		}
 		while (GPIO_ReadFromInputPin(DHT11_Pin.pGPIOx, 9));
 	}
-	UART_SendString(USART2, "Check response success\r\n");
 
 	Data[0] = (tmp >> 32)	& 0xFF;	// Int RH
 	Data[1] = (tmp >> 24)	& 0xFF;	// Dec RH
@@ -98,8 +97,7 @@ uint8_t CheckSum(uint8_t *data){
 	for(int i = 0; i < 4; i++){
 		Sum += data[i];
 	}
-	if (Sum != data[4]){
-		UART_SendString(USART2, "Check sum error\r\n");
+	if (Sum != data[4]){UART_SendString(USART2, "Check response success\r\n");
 		return -1;
 	}
 }

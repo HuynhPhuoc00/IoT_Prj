@@ -1,8 +1,0 @@
-Core/Inc/74HC595.o: ../Core/Inc/74HC595.c ../Core/Inc/74HC595.h \
- ../Core/Inc/stm32f411.h ../Core/Inc/GPIO_user.h ../Core/Inc/USART.h \
- ../Core/Inc/SPI.h
-../Core/Inc/74HC595.h:
-../Core/Inc/stm32f411.h:
-../Core/Inc/GPIO_user.h:
-../Core/Inc/USART.h:
-../Core/Inc/SPI.h:

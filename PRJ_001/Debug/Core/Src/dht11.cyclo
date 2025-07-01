@@ -2,4 +2,4 @@
 ../Core/Src/dht11.c:29:9:start_dht	3
 ../Core/Src/dht11.c:42:9:CheckResponse	6
 ../Core/Src/dht11.c:59:9:Read_DHT	7
-../Core/Src/dht11.c:96:9:CheckSum	3
+../Core/Src/dht11.c:95:9:CheckSum	3

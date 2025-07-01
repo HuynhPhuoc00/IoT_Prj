@@ -21,17 +21,17 @@ extern "C" {
  *	PE4->DS2
  *****************************************************/
 enum DS_Num{
-	DS0 = PIN_NUM_1,
-	DS1 = PIN_NUM_3,
-	DS2 = PIN_NUM_5,
-	DS3 = PIN_NUM_7,
+	DS0 = GPIO_PIN_NUM_1,
+	DS1 = GPIO_PIN_NUM_3,
+	DS2 = GPIO_PIN_NUM_5,
+	DS3 = GPIO_PIN_NUM_7,
 };
 
 enum ST_CP_Num{
-	ST_CP0 = PIN_NUM_2,
-	ST_CP1 = PIN_NUM_4,
-	ST_CP2 = PIN_NUM_6,
-	ST_CP3 = PIN_NUM_8,
+	ST_CP0 = GPIO_PIN_NUM_2,
+	ST_CP1 = GPIO_PIN_NUM_4,
+	ST_CP2 = GPIO_PIN_NUM_6,
+	ST_CP3 = GPIO_PIN_NUM_8,
 };
 
 typedef struct{

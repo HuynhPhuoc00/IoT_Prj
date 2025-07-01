@@ -113,6 +113,7 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnOrDis);
 
 //Init and Denit
 void GPIO_Init(GPIO_Handle_t *pGPIOHandel);
+void GPIO_Init_Pin(GPIO_Handle_t *pGPIOHandel);
 void GPIO_Denit(GPIO_RegDef_t *pGPIOx);
 
 // Data read and write
@@ -122,7 +123,7 @@ void GPIO_WriteToOutPutPin(GPIO_RegDef_t *pGPIOx, uint8_t GPIO_PinNumber, uint8_
 void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t Value);
 void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx,uint8_t GPIO_PinNumber);
 
-void GPIO_Init_Pin(GPIO_Handle_t *pGPIOHandel, uint8_t Pin_Number);
+
 #ifdef __cplusplus
 }
 #endif

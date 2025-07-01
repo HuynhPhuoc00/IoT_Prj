@@ -1,0 +1,25 @@
+/*
+ * keyboard.h
+ *
+ *  Created on: Jun 27, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_KEYBOARD_H_
+#define SRC_KEYBOARD_H_
+
+#include "stm32f411.h"
+
+void Config_Pin();
+void ReadKey();
+
+#define R1 do {GPIO_ReadFromInputPin(Key_Pin.pGPIOx, 0);} while(0);
+#define R2 do {GPIO_ReadFromInputPin(Key_Pin.pGPIOx, 0);} while(0);
+#define R3 do {GPIO_ReadFromInputPin(Key_Pin.pGPIOx, 0);} while(0);
+#define R4 do {GPIO_ReadFromInputPin(Key_Pin.pGPIOx, 0);} while(0);
+#define C1 do {GPIO_ReadFromInputPin(Key_Pin.pGPIOx, 0);} while(0);
+#define C2 do {GPIO_ReadFromInputPin(Key_Pin.pGPIOx, 0);} while(0);
+#define C3 do {GPIO_ReadFromInputPin(Key_Pin.pGPIOx, 0);} while(0);
+#define C4 do {GPIO_ReadFromInputPin(Key_Pin.pGPIOx, 0);} while(0);
+
+#endif /* SRC_KEYBOARD_H_ */

@@ -109,7 +109,7 @@ Pin_74H595 Set_74HC595(Pin_74H595 *Pin_74H595_t, uint8_t DS_GPIO_PIN_NUM, uint8_
 	Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
 	Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
 	Pin_74H595_t->SH_CP.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
-	GPIO_Init(&(Pin_74H595_t->SH_CP));
+	GPIO_Init_Pin(&(Pin_74H595_t->SH_CP));
 
 	Pin_74H595_t->DS.pGPIOx = GPIOE;
 	Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinNumber = DS_GPIO_PIN_NUM;
@@ -117,7 +117,7 @@ Pin_74H595 Set_74HC595(Pin_74H595 *Pin_74H595_t, uint8_t DS_GPIO_PIN_NUM, uint8_
 	Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
 	Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
 	Pin_74H595_t->DS.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
-	GPIO_Init(&(Pin_74H595_t->DS));
+	GPIO_Init_Pin(&(Pin_74H595_t->DS));
 
 	Pin_74H595_t->ST_CP.pGPIOx = GPIOE;
 	Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinNumber = ST_CP_GPIO_PIN_NUM;
@@ -125,7 +125,7 @@ Pin_74H595 Set_74HC595(Pin_74H595 *Pin_74H595_t, uint8_t DS_GPIO_PIN_NUM, uint8_
 	Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
 	Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_HIGH;
 	Pin_74H595_t->ST_CP.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
-	GPIO_Init(&(Pin_74H595_t->ST_CP));
+	GPIO_Init_Pin(&(Pin_74H595_t->ST_CP));
 
 	return *Pin_74H595_t;
 }

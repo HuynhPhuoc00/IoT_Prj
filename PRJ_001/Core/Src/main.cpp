@@ -64,7 +64,7 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
-USART_Handle_t usart;
+
 int main(void)
 {
 
@@ -89,38 +89,41 @@ int main(void)
 
   /* Initialize all configured peripherals */
 
-	usart.pUSARTx = USART2;
-	usart.USART_Config.USART_Baud = USART_STD_BAUD_9600;
-	USART_Init(&usart);
+
   /* USER CODE BEGIN 2 */
 	Room LVR("Living Room");
 //	Room KTR("Kitchen Room");
 //	Room BR("Bed Room");
 	LVR.TurnOnLed(Room::em_Led1);
+	delay_ms(1000);
+	LVR.TurnOnLed(Room::em_Led2);
+	delay_ms(1000);
+	LVR.TurnOnLed(Room::em_Led3);
+	delay_ms(1000);
 //	KTR.TurnOnLed(Room::em_Led2);
 //	BR.TurnOnLed(Room::em_Led3);
 
   /* USER CODE END 2 */
-	GPIOD_PCLK_EN;
-
-	GPIO_Handle_t LED;
-	LED.pGPIOx = GPIOD;
-	LED.GPIO_Pin_Config.GPIO_PinNumber = PIN_NUM_12 | PIN_NUM_13 | PIN_NUM_14 | PIN_NUM_15;
-	LED.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
-	LED.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
-	LED.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_LOW;
-	LED.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_NOPUPD;
-	GPIO_Init(&LED);
+//	GPIOD_PCLK_EN;
+//
+//	GPIO_Handle_t LED;
+//	LED.pGPIOx = GPIOD;
+//	LED.GPIO_Pin_Config.GPIO_PinNumber = PIN_NUM_12 | PIN_NUM_13 | PIN_NUM_14 | PIN_NUM_15;
+//	LED.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+//	LED.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+//	LED.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_LOW;
+//	LED.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_NOPUPD;
+//	GPIO_Init(&LED);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-	  GPIO_ToggleOutputPin(LED.pGPIOx, 12);
-	  GPIO_ToggleOutputPin(LED.pGPIOx, 13);
-	  GPIO_ToggleOutputPin(LED.pGPIOx, 14);
-	  GPIO_ToggleOutputPin(LED.pGPIOx, 15);
-	  delay_ms(200);
+//	  GPIO_ToggleOutputPin(LED.pGPIOx, 12);
+//	  GPIO_ToggleOutputPin(LED.pGPIOx, 13);
+//	  GPIO_ToggleOutputPin(LED.pGPIOx, 14);
+//	  GPIO_ToggleOutputPin(LED.pGPIOx, 15);
+//	  delay_ms(200);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

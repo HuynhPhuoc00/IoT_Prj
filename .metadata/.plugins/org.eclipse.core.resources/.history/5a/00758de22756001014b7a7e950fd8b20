@@ -1,0 +1,107 @@
+/*
+ * keyboard.c
+ *
+ *  Created on: Jun 27, 2025
+ *      Author: Administrator
+ */
+#include "keyboard.h"
+
+GPIO_Handle_t Key_Pin_R;
+GPIO_Handle_t Key_Pin_C;
+USART_Handle_t usart;
+
+char KeyMap[4][4]= {
+	{'1', '2', '3', 'A'},
+	{'4', '5', '6', 'B'},
+	{'7', '8', '9', 'C'},
+	{'*', '0', '#', 'D'},
+};
+
+void Config_Pin(){
+	GPIOD_PCLK_EN;
+	Key_Pin_R.pGPIOx = GPIOD;
+	Key_Pin_R.GPIO_Pin_Config.GPIO_PinNumber = \
+	PIN_NUM_0 | PIN_NUM_1 | PIN_NUM_2 | PIN_NUM_3;
+	Key_Pin_R.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	Key_Pin_R.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	Key_Pin_R.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_LOW;
+	Key_Pin_R.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	GPIO_Init(&Key_Pin_R);
+
+	Key_Pin_C.pGPIOx = GPIOD;
+	Key_Pin_C.GPIO_Pin_Config.GPIO_PinNumber = \
+	PIN_NUM_4 | PIN_NUM_5 | PIN_NUM_6 | PIN_NUM_7;
+	Key_Pin_C.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_INPUT;
+	Key_Pin_C.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
+	Key_Pin_C.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_LOW;
+	Key_Pin_C.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+
+	GPIO_Init(&Key_Pin_C);
+
+	usart.pUSARTx = USART2;
+	usart.USART_Config.USART_Baud = USART_STD_BAUD_9600;
+	USART_Init(&usart);
+
+
+
+
+	while (1){
+		if(ReadKey()){
+			UART_SendString(USART2, "Key : ");
+			USART_SendChar(USART2, ReadKey());
+			UART_SendString(USART2, "\r\n");
+			delay_ms(200);
+		}
+	}
+}
+
+char ReadKey(){
+	//	Read col for R1
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R1, Low);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R2, High);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R3, High);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R4, High);
+
+	for (int8_t i = 0; i < KeyCol; i++){
+		if(!GPIO_ReadFromInputPin(Key_Pin_C.pGPIOx, (C1 + i))){
+			return KeyMap[R1][i];
+		}
+	}
+
+	//	Read col for R2
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R1, High);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R2, Low);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R3, High);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R4, High);
+
+	for (int8_t i = 0; i < KeyCol; i++){
+		if(!GPIO_ReadFromInputPin(Key_Pin_C.pGPIOx, (C1 + i))){
+			return KeyMap[R2][i];
+		}
+	}
+
+	//	Read col for R3
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R1, High);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R2, High);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R3, Low);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R4, High);
+
+	for (int8_t i = 0; i < KeyCol; i++){
+		if(!GPIO_ReadFromInputPin(Key_Pin_C.pGPIOx, (C1 + i))){
+			return KeyMap[R3][i];
+		}
+	}
+
+	//	Read col for R4
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R1, High);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R2, High);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R3, High);
+	GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R4, Low);
+
+	for (int8_t i = 0; i < KeyCol; i++){
+		if(!GPIO_ReadFromInputPin(Key_Pin_C.pGPIOx, (C1 + i))){
+			return KeyMap[R4][i];
+		}
+	}
+	return 0;
+}
