@@ -1,2 +1,2 @@
-../Core/Src/keyboard.c:20:6:Config_Pin	24	static
-../Core/Src/keyboard.c:58:6:ReadKey	16	static
+../Core/Src/keyboard.c:20:6:Config_Pin	8	static
+../Core/Src/keyboard.c:42:6:ReadKey	16	static

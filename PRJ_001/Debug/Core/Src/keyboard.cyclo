@@ -1,2 +1,2 @@
-../Core/Src/keyboard.c:20:6:Config_Pin	4
-../Core/Src/keyboard.c:58:6:ReadKey	9
+../Core/Src/keyboard.c:20:6:Config_Pin	1
+../Core/Src/keyboard.c:42:6:ReadKey	9
