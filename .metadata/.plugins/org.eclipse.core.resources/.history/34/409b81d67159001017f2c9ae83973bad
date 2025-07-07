@@ -1,0 +1,23 @@
+/*
+ * Interrupt.c
+ *
+ *  Created on: Jul 5, 2025
+ *      Author: Administrator
+ */
+
+#include "Interrupt.h"
+
+Syscfg_Reg_Def_t *Syscfg_Reg_Def;
+
+void Interrupt_Config(){
+	// Enable SYSCFG
+	// Config EXTIx PDxPin (x = 0->3)
+	for(int i = 0; i < 4; i++){
+		Syscfg_Reg_Def->EXTICR1 = PDxPin << 4*i;
+	}
+	// Config EXTIx PDxPin (x = 4->7)
+	for(int i = 0; i < 4; i++){
+		Syscfg_Reg_Def->EXTICR2 = PDxPin << 4*i;
+	}
+}
+

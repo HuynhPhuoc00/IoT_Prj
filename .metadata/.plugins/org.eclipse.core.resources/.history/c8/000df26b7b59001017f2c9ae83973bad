@@ -1,0 +1,48 @@
+/*
+ * Interrupt.c
+ *
+ *  Created on: Jul 5, 2025
+ *      Author: Administrator
+ */
+
+#include "Interrupt.h"
+
+Syscfg_Reg_Def_t *Syscfg_Reg_Def;
+Exti_Reg_Def_t *Exti_Reg_Def;
+
+void Interrupt_Config(){
+	// Enable SYSCFG
+	// Config EXTIx PDxPin (x = 0->3)
+	for(int i = 0; i < 4; i++){
+		Syscfg_Reg_Def->EXTICR1 |= PDxPin << (4*i);
+	}
+	// Config EXTIx PDxPin (x = 4->7)
+	for(int i = 0; i < 4; i++){
+		Syscfg_Reg_Def->EXTICR2 |= PDxPin << (4*i);
+	}
+	// Set Interrupt not mask in line 0->7
+	Exti_Reg_Def->IMR |= 0xFF;
+	// Rising trigger in line 0->7
+	Exti_Reg_Def->RTSR |= 0xFF;
+
+	// Set Priority
+	NVIC_SetPriority(EXTI0_IRQn, 0);
+	NVIC_SetPriority(EXTI1_IRQn, 0);
+	NVIC_SetPriority(EXTI2_IRQn, 0);
+	NVIC_SetPriority(EXTI3_IRQn, 0);
+	NVIC_SetPriority(EXTI4_IRQn, 0);
+	NVIC_SetPriority(EXTI9_5_IRQn, 0);
+
+	// Enable Interrupt
+	NVIC_EnableIRQ(EXTI0_IRQn);
+	NVIC_EnableIRQ(EXTI1_IRQn);
+	NVIC_EnableIRQ(EXTI2_IRQn);
+	NVIC_EnableIRQ(EXTI3_IRQn);
+	NVIC_EnableIRQ(EXTI4_IRQn);
+	NVIC_EnableIRQ(EXTI9_5_IRQn);
+}
+
+uint8_t Read_int_line(uint8_t line){
+	return ((Exti_Reg_Def->PR >> line) & 0x1);
+}
+

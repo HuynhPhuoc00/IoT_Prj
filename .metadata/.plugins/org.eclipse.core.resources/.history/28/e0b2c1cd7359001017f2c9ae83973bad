@@ -1,0 +1,37 @@
+/*
+ * Interrupt.c
+ *
+ *  Created on: Jul 5, 2025
+ *      Author: Administrator
+ */
+
+#include "Interrupt.h"
+
+Syscfg_Reg_Def_t *Syscfg_Reg_Def;
+Exti_Reg_Def_t *Exti_Reg_Def;
+
+void Interrupt_Config(){
+	// Enable SYSCFG
+	// Config EXTIx PDxPin (x = 0->3)
+	for(int i = 0; i < 4; i++){
+		Syscfg_Reg_Def->EXTICR1 |= PDxPin << (4*i);
+	}
+	// Config EXTIx PDxPin (x = 4->7)
+	for(int i = 0; i < 4; i++){
+		Syscfg_Reg_Def->EXTICR2 |= PDxPin << (4*i);
+	}
+	// Set Interrupt not mask in line 0->7
+	Exti_Reg_Def->IMR |= 0xFF;
+	// Rising trigger in line 0->7
+	Exti_Reg_Def->RTSR |= 0xFF;
+
+	NVIC_SetPriority(EXTI0_IRQn, 0);
+	NVIC_SetPriority(EXTI1_IRQn, 0);
+	NVIC_SetPriority(EXTI2_IRQn, 0);
+	NVIC_SetPriority(EXTI3_IRQn, 0);
+	NVIC_SetPriority(EXTI4_IRQn, 0);
+	NVIC_SetPriority(EXTI5_IRQn, 0);
+	NVIC_SetPriority(EXTI6_IRQn, 0);
+	NVIC_SetPriority(EXTI7_IRQn, 0);
+}
+

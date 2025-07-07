@@ -3,9 +3,9 @@
  <FRAME activewindow="0">
   <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffffab0000000d000000d506000003040000</PLACEMENT>
   <WINDOW type="default" module="ISIS">
-   <editor metric="0" gridmajor="2540000" mode="00000010" zoom="0" scale="80" flipped="0" gridminor="254000" gridmode="16" snapidx="2" snap="254000" xcursor="0" orgmode="0" snaprange="158750">
+   <editor metric="0" gridmajor="25400000" mode="00000000" zoom="0" scale="79" flipped="0" gridminor="508000" gridmode="16" snapidx="2" snap="254000" xcursor="0" orgmode="0" snaprange="160759">
     <world y1="-8890000" x1="-12700000" y2="8890000" x2="12700000"/>
-    <centre x="4064000" y="18605500"/>
+    <centre x="3048000" y="22860000"/>
     <origin x="0" y="0"/>
    </editor>
   </WINDOW>
@@ -18,9 +18,9 @@
   </editor>
  </MODULE>
  <MODULE name="ISIS">
-  <editor metric="0" gridmajor="2540000" mode="00000010" zoom="0" scale="80" flipped="0" gridminor="254000" gridmode="16" snapidx="2" snap="254000" xcursor="0" orgmode="0" snaprange="158750">
+  <editor metric="0" gridmajor="25400000" mode="00000000" zoom="0" scale="79" flipped="0" gridminor="508000" gridmode="16" snapidx="2" snap="254000" xcursor="0" orgmode="0" snaprange="160759">
    <world y1="-8890000" x1="-12700000" y2="8890000" x2="12700000"/>
-   <centre x="4064000" y="18605500"/>
+   <centre x="3048000" y="22860000"/>
    <origin x="0" y="0"/>
   </editor>
  </MODULE>
@@ -70,7 +70,7 @@
      <ITEM name="VSplitter1Pos">238</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="431" x="71" flags="00008023" y="139" h="558" pid="0" iid="9">
+   <POPUP w="431" x="1420" flags="00008023" y="304" h="558" pid="0" iid="9">
     <PROPERTIES>
      <ITEM name="AutoEcho">0</ITEM>
      <ITEM name="HexMode">0</ITEM>

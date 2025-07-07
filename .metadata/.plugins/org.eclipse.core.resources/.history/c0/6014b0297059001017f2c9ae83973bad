@@ -1,0 +1,45 @@
+/*
+ * Interrupt.h
+ *
+ *  Created on: Jul 5, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_INTERRUPT_H_
+#define SRC_INTERRUPT_H_
+
+#include "stm32f411.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void Interrupt_Config();
+
+#define EXTI0	0x0
+#define EXTI1	0x4
+#define EXTI2	0x8
+#define EXTI3	0xC
+#define EXTI4	0x0
+#define EXTI5	0x4
+#define EXTI6	0x8
+#define EXTI7	0xC
+
+#define PDxPin 0x3u
+
+typedef struct{
+	vo uint32_t MEMRMP;
+	vo uint32_t PMC;
+	vo uint32_t EXTICR1;
+	vo uint32_t EXTICR2;
+	vo uint32_t EXTICR3;
+	vo uint32_t EXTICR4;
+	vo uint32_t RESERVED[2];
+	vo uint32_t CMPCR;
+}Syscfg_Reg_Def_t;
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* SRC_INTERRUPT_H_ */

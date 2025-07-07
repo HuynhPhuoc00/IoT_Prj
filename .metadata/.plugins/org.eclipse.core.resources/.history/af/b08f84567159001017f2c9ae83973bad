@@ -1,0 +1,38 @@
+/*
+ * Interrupt.h
+ *
+ *  Created on: Jul 5, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_INTERRUPT_H_
+#define SRC_INTERRUPT_H_
+
+#include "stm32f411.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define PDxPin 	0x3
+
+#define SYSCFG_BASEADDR		0x40013800u
+
+typedef struct{
+	vo uint32_t MEMRMP;
+	vo uint32_t PMC;
+	vo uint32_t EXTICR1;
+	vo uint32_t EXTICR2;
+	vo uint32_t EXTICR3;
+	vo uint32_t EXTICR4;
+	vo uint32_t RESERVED[2];
+	vo uint32_t CMPCR;
+}Syscfg_Reg_Def_t;
+
+#define SYSCFG ((Syscfg_Reg_Def_t *)SYSCFG_BASEADDR)
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* SRC_INTERRUPT_H_ */

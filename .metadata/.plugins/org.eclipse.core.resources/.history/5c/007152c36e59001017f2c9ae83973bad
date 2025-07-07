@@ -1,0 +1,21 @@
+/*
+ * Interrupt.h
+ *
+ *  Created on: Jul 5, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_INTERRUPT_H_
+#define SRC_INTERRUPT_H_
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* SRC_INTERRUPT_H_ */
