@@ -14,15 +14,37 @@ extern "C" {
 
 #include "stm32f411.h"
 
+// GPIO base address
+#define GPIOA_BASE_ADDR                  0x40020000U
+#define GPIOB_BASE_ADDR                  0x40020400U
+#define GPIOC_BASE_ADDR                  0x40020800U
+#define GPIOD_BASE_ADDR                  0x40020C00U
+#define GPIOE_BASE_ADDR                  0x40021000U
+
+// GPIO Register
+typedef struct
+{
+    vo uint32_t MODER  ;
+    vo uint32_t OTYPER ;
+    vo uint32_t OSPEEDR;
+    vo uint32_t PUPDR  ;
+    vo uint32_t IDR    ;
+    vo uint32_t ODR    ;
+    vo uint32_t BSRR   ;
+    vo uint32_t LCKR   ;
+    vo uint32_t AFRL   ;
+    vo uint32_t AFRH   ;
+}GPIO_RegDef_t;
+
 //GPIO Type
 typedef struct{
-    uint16_t GPIO_PinNumber;			//
-    uint8_t GPIO_PinMode;           //
-    uint8_t GPIO_PinSpeed;			// tốc độ truyền dữ liệu trên chân GPIO.
-    uint8_t GPIO_PinPuPdControl;	// kiểm soát điện trở kéo lên hoặc kéo xuống trên chân GPIO.
-    uint8_t GPIO_PinOPType;			// chế độ hoạt động đầu ra của chân GPIO (ví dụ: push-pull, open-drain, ...).
-    uint8_t GPIO_PinAltFunMode_High;		// chế độ hoạt động chức năng thay thế (alternate function) của chân GPIO (nếu có).
-    uint8_t GPIO_PinAltFunMode_Low;		// chế độ hoạt động chức năng thay thế (alternate function) của chân GPIO (nếu có).
+    uint16_t GPIO_PinNumber;
+    uint8_t GPIO_PinMode;
+    uint8_t GPIO_PinSpeed;
+    uint8_t GPIO_PinPuPdControl;
+    uint8_t GPIO_PinOPType;
+    uint8_t GPIO_PinAltFunMode_High;
+    uint8_t GPIO_PinAltFunMode_Low;
 
 }GPIO_Pin_Config_t;
 
@@ -30,6 +52,14 @@ typedef struct{
     GPIO_RegDef_t     *pGPIOx;
     GPIO_Pin_Config_t GPIO_Pin_Config;
 }GPIO_Handle_t;
+
+// Peripheral definition
+#define GPIOA   ((GPIO_RegDef_t*)GPIOA_BASE_ADDR)
+#define GPIOB   ((GPIO_RegDef_t*)GPIOB_BASE_ADDR)
+#define GPIOC   ((GPIO_RegDef_t*)GPIOC_BASE_ADDR)
+#define GPIOD   ((GPIO_RegDef_t*)GPIOD_BASE_ADDR)
+#define GPIOD   ((GPIO_RegDef_t*)GPIOD_BASE_ADDR)
+#define GPIOE   ((GPIO_RegDef_t*)GPIOE_BASE_ADDR)
 
 // GPIO pin number
 #define GPIO_PIN_NUM_0		            0
@@ -108,6 +138,29 @@ typedef struct{
 #define GPIO_AFRL_AF7             		7
 // ...
 #define GPIO_AFRL_AF15            		15
+
+// GPIO peripheral clock enable register
+#define GPIOA_PCLK_EN           (RCC->AHB1ENR |= (1<<0))
+#define GPIOB_PCLK_EN           (RCC->AHB1ENR |= (1<<1))
+#define GPIOC_PCLK_EN           (RCC->AHB1ENR |= (1<<2))
+#define GPIOD_PCLK_EN           (RCC->AHB1ENR |= (1<<3))
+#define GPIOE_PCLK_EN           (RCC->AHB1ENR |= (1<<4))
+
+// GPIO peripheral clock disable register
+#define GPIOA_PCLK_DIS          (RCC->AHB1ENR &= ~(1<<0))
+#define GPIOB_PCLK_DIS          (RCC->AHB1ENR &= ~(1<<1))
+#define GPIOC_PCLK_DIS          (RCC->AHB1ENR &= ~(1<<2))
+#define GPIOD_PCLK_DIS          (RCC->AHB1ENR &= ~(1<<3))
+#define GPIOE_PCLK_DIS          (RCC->AHB1ENR &= ~(1<<4))
+
+//Marco reset GPIOx peripheral
+#define GPIOA_REG_RST()         do{RCC->AHB1RSTR |= (1<<0);RCC->AHB1RSTR &= ~(1<<0);} while(0)
+#define GPIOB_REG_RST()         do{RCC->AHB1RSTR |= (1<<1);RCC->AHB1RSTR &= ~(1<<1);} while(0)
+#define GPIOC_REG_RST()         do{RCC->AHB1RSTR |= (1<<2);RCC->AHB1RSTR &= ~(1<<2);} while(0)
+#define GPIOD_REG_RST()         do{RCC->AHB1RSTR |= (1<<3);RCC->AHB1RSTR &= ~(1<<3);} while(0)
+#define GPIOE_REG_RST()         do{RCC->AHB1RSTR |= (1<<4);RCC->AHB1RSTR &= ~(1<<4);} while(0)
+
+
 // Configure pin
 void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnOrDis);
 

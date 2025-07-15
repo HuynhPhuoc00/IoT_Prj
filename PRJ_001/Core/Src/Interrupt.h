@@ -44,7 +44,12 @@ typedef struct{
 #define EXTI ((Exti_Reg_Def_t *)EXTI_BASEADDR)
 
 void Interrupt_Config();
-uint8_t Read_int_line(uint8_t line);
+void EXTI0_IRQHandler();
+void EXTI1_IRQHandler();
+void EXTI2_IRQHandler();
+void EXTI3_IRQHandler();
+void EXTI4_IRQHandler();
+void EXTI9_5_IRQHandler();
 
 #ifdef __cplusplus
 }

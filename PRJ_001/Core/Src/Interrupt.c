@@ -6,8 +6,13 @@
  */
 
 #include "Interrupt.h"
-
+GPIO_Handle_t LED;
 void Interrupt_Config(){
+
+	LED.pGPIOx = GPIOD;
+	LED.GPIO_Pin_Config.GPIO_PinNumber = PIN_NUM_12 | PIN_NUM_13 | PIN_NUM_14 | PIN_NUM_15;
+	LED.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	GPIO_Init(&LED);
 	// Enable SYSCFG
 	// Config EXTIx PDxPin (x = 0->3)
 	for(int i = 0; i < 4; i++){
@@ -19,7 +24,7 @@ void Interrupt_Config(){
 	}
 	// Set Interrupt not mask in line 0->7
 	EXTI->IMR |= 0xFF;
-	// Rising trigger in line 0->7
+	// Falling trigger in line 0->7
 	EXTI->RTSR |= 0xFF;
 
 	// Set Priority
@@ -39,7 +44,33 @@ void Interrupt_Config(){
 	NVIC_EnableIRQ(EXTI9_5_IRQn);
 }
 
-uint8_t Read_int_line(uint8_t line){
-	return ((EXTI->PR >> line) & 0x1);
+void EXTI0_IRQHandler(){
+	if (EXTI->PR & (1<<0)){
+		EXTI->PR |= (1<<0); // clear pending
+	}
 }
+void EXTI1_IRQHandler(){
+	if (EXTI->PR & (1<<1)){
+		EXTI->PR |= (1<<1); // clear pending
+	}
+}
+void EXTI2_IRQHandler(){
+	if (EXTI->PR & (1<<2)){
+		EXTI->PR |= (1<<2); // clear pending
+	}
+}
+void EXTI3_IRQHandler(){
+	if (EXTI->PR & (1<<3)){
+		EXTI->PR |= (1<<3); // clear pending
+	}
+}
+
+void EXTI4_IRQHandler(){
+	if (EXTI->PR & (1<<4)){
+		EXTI->PR |= (1<<4); // clear pending
+		GPIO_WriteToOutPutPin(LED.pGPIOx, 12, High);
+	}
+}
+
+void EXTI9_5_IRQHandler();
 

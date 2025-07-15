@@ -17,26 +17,24 @@ char KeyMap[4][4]= {
 	{'*', '0', '#', 'D'},
 };
 
-void Config_Pin(){
+void Key_Config_Pin(){
 	GPIOD_PCLK_EN;
 	Key_Pin_R.pGPIOx = GPIOD;
 	Key_Pin_R.GPIO_Pin_Config.GPIO_PinNumber = \
 	PIN_NUM_0 | PIN_NUM_1 | PIN_NUM_2 | PIN_NUM_3;
 	Key_Pin_R.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
-	Key_Pin_R.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
-	Key_Pin_R.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_LOW;
 	Key_Pin_R.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
 	GPIO_Init(&Key_Pin_R);
 
 	Key_Pin_C.pGPIOx = GPIOD;
 	Key_Pin_C.GPIO_Pin_Config.GPIO_PinNumber = \
 	PIN_NUM_4 | PIN_NUM_5 | PIN_NUM_6 | PIN_NUM_7;
-	Key_Pin_C.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_INPUT;
-	Key_Pin_C.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
-	Key_Pin_C.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_LOW;
+	Key_Pin_C.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
 	Key_Pin_C.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
 
 	GPIO_Init(&Key_Pin_C);
+
+	Interrupt_Config();
 }
 
 char ReadKey(){

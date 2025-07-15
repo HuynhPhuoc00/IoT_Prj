@@ -1,0 +1,57 @@
+/*
+ * LCD_SPI.c
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: Administrator
+ */
+
+#include "LCD_SPI.h"
+
+SPI_Handle_t spi;
+GPIO_Handle_t DC;
+
+void LCD_SPI_Config(){
+	spi.pSPIx = SPI1;
+	spi.SPI_Congif_t.MaxCLK = 15000000;
+	SPI_Init(&spi);
+
+	DC.pGPIOx = GPIOA;
+	DC.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_8;
+	DC.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	DC.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	GPIO_Init(&DC);
+}
+
+void LCDSPI_send_cmd(uint8_t data){
+	SPI_Transmit(&spi, data); // Software reset
+}
+
+void LCDSPI_send_data(uint8_t data){
+	GPIO_WriteToOutPutPin(DC.pGPIOx, 8, High);
+	SPI_Transmit(&spi, data); // Software reset
+	GPIO_WriteToOutPutPin(DC.pGPIOx, 8, Low);
+}
+
+void Init_LCD_SPI(){
+	//  1: Software reset
+	LCDSPI_send_cmd(0x1);
+	delay_ms(150);
+	//  2: Out of sleep mode
+	LCDSPI_send_cmd(0x11);
+	delay_ms(150);
+
+	// 3: Set color mode
+	// Default 18bit/pixel
+	LCDSPI_send_cmd(0x11);
+	delay_ms(150);
+
+	// Set Frame Rate with default param
+	LCDSPI_send_cmd(0xB1);
+	LCDSPI_send_cmd(0xB2);
+	LCDSPI_send_cmd(0xB3);
+
+	// Display Inversion mode control
+	LCDSPI_send_cmd(0xB4);
+}
+
+

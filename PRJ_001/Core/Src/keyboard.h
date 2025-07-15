@@ -49,7 +49,7 @@ typedef enum{
 	C4 = 7,
 }KeyIO;
 
-void Config_Pin();
+void Key_Config_Pin();
 char ReadKey();
 #ifdef __cplusplus
 }

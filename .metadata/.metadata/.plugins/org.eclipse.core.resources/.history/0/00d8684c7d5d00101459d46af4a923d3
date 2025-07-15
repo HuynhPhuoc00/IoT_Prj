@@ -1,0 +1,24 @@
+/*
+ * LCD_SPI.c
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: Administrator
+ */
+
+#include "LCD_SPI.h"
+
+SPI_Handle_t spi;
+
+void LCD_SPI_Config(){
+	spi.pSPIx = SPI1;
+	spi.SPI_Congif_t.MaxCLK = 15000000;
+	SPI_Init(&spi);
+}
+
+void Init_LCD_SPI(){
+	SPI_Transmit(&spi, 0x01); // Software reset
+	delay_ms(150);
+
+}
+
+

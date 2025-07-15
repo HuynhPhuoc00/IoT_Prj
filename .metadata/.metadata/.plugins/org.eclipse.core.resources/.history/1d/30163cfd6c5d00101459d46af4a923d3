@@ -1,0 +1,25 @@
+/*
+ * LCD_SPI.h
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: Administrator
+ */
+
+#ifndef SRC_LCD_SPI_H_
+#define SRC_LCD_SPI_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "stm32f411.h"
+#include "SPI.h"
+
+void LCD_SPI_Config();
+void Init_LCD_SPI();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* SRC_LCD_SPI_H_ */

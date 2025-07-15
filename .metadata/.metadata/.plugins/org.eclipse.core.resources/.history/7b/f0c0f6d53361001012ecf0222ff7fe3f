@@ -1,0 +1,75 @@
+/*
+ * Interrupt.c
+ *
+ *  Created on: Jul 5, 2025
+ *      Author: Administrator
+ */
+
+#include "Interrupt.h"
+GPIO_Handle_t LED;
+void Interrupt_Config(){
+
+	LED.pGPIOx = GPIOD;
+	LED.GPIO_Pin_Config.GPIO_PinNumber = PIN_NUM_12 | PIN_NUM_13 | PIN_NUM_14 | PIN_NUM_15;
+	LED.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	GPIO_Init(&LED);
+	// Enable SYSCFG
+	// Config EXTIx PDxPin (x = 0->3)
+	for(int i = 0; i < 4; i++){
+		SYSCFG->EXTICR1 |= PDxPin << (4*i);
+	}
+	// Config EXTIx PDxPin (x = 4->7)
+	for(int i = 0; i < 4; i++){
+		SYSCFG->EXTICR2 |= PDxPin << (4*i);
+	}
+	// Set Interrupt not mask in line 0->7
+	EXTI->IMR |= 0xFF;
+	// Falling trigger in line 0->7
+	EXTI->RTSR |= 0xFF;
+
+	// Set Priority
+	NVIC_SetPriority(EXTI0_IRQn, 0);
+	NVIC_SetPriority(EXTI1_IRQn, 0);
+	NVIC_SetPriority(EXTI2_IRQn, 0);
+	NVIC_SetPriority(EXTI3_IRQn, 0);
+	NVIC_SetPriority(EXTI4_IRQn, 0);
+	NVIC_SetPriority(EXTI9_5_IRQn, 0);
+
+	// Enable Interrupt
+	NVIC_EnableIRQ(EXTI0_IRQn);
+	NVIC_EnableIRQ(EXTI1_IRQn);
+	NVIC_EnableIRQ(EXTI2_IRQn);
+	NVIC_EnableIRQ(EXTI3_IRQn);
+	NVIC_EnableIRQ(EXTI4_IRQn);
+	NVIC_EnableIRQ(EXTI9_5_IRQn);
+}
+
+void EXTI0_IRQHandler(){
+	if (EXTI->PR & (1>>0)){
+		EXTI->PR |= (1>>0); // clear pending
+		GPIO_WriteToOutPutPin(LED.pGPIOx, 12, High);
+	}
+}
+void EXTI1_IRQHandler(){
+	if (EXTI->PR & (1>>1)){
+		EXTI->PR |= (1>>1); // clear pending
+		GPIO_WriteToOutPutPin(LED.pGPIOx, 12, High);
+	}
+}
+void EXTI2_IRQHandler();
+void EXTI3_IRQHandler(){
+	if (EXTI->PR & (1>>3)){
+		EXTI->PR |= (1>>3); // clear pending
+		GPIO_WriteToOutPutPin(LED.pGPIOx, 13, High);
+	}
+}
+
+void EXTI4_IRQHandler(){
+	if (EXTI->PR & (1>>4)){
+		EXTI->PR |= (1>>4); // clear pending
+		GPIO_WriteToOutPutPin(LED.pGPIOx, 14, High);
+	}
+}
+
+void EXTI9_5_IRQHandler();
+

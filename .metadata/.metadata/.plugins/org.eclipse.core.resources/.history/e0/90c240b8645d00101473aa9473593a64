@@ -1,0 +1,14 @@
+/*
+ * LCD_SPI.c
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: Administrator
+ */
+
+SPI_Handle_t spi;
+
+void Init_LCD_SPI(){
+
+}
+
+

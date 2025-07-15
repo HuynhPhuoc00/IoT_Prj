@@ -1,4 +1,8 @@
 ../Drivers/CMSIS/Include/core_cm4.h:1684:22:__NVIC_EnableIRQ	2
 ../Drivers/CMSIS/Include/core_cm4.h:1814:22:__NVIC_SetPriority	2
 ../Core/Src/Interrupt.c:10:6:Interrupt_Config	3
-../Core/Src/Interrupt.c:42:9:Read_int_line	1
+../Core/Src/Interrupt.c:47:6:EXTI0_IRQHandler	2
+../Core/Src/Interrupt.c:52:6:EXTI1_IRQHandler	2
+../Core/Src/Interrupt.c:57:6:EXTI2_IRQHandler	2
+../Core/Src/Interrupt.c:62:6:EXTI3_IRQHandler	2
+../Core/Src/Interrupt.c:68:6:EXTI4_IRQHandler	2

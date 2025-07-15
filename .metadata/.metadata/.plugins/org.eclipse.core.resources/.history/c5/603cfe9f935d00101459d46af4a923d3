@@ -1,0 +1,84 @@
+/*
+ * LCD_SPI.c
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: Administrator
+ */
+
+#include "LCD_SPI.h"
+
+SPI_Handle_t spi;
+GPIO_Handle_t DC;
+
+void LCD_SPI_Config(){
+	spi.pSPIx = SPI1;
+	spi.SPI_Congif_t.MaxCLK = 15000000;
+	SPI_Init(&spi);
+
+	DC.pGPIOx = GPIOA;
+	DC.GPIO_Pin_Config.GPIO_PinNumber = GPIO_PIN_8;
+	DC.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
+	DC.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_PU;
+	GPIO_Init(&DC);
+}
+
+void Init_LCD_SPI(){
+	LCD_SPI_Config();
+
+	//  1: Software reset
+	LCDSPI_send_cmd(SWRESET);
+	delay_ms(50);
+	//  2: Out of sleep mode
+	LCDSPI_send_cmd(SLPOUT);
+	delay_ms(500);
+
+	// 3: Set color mode1, 1 arg
+	// Default 18bit/pixel
+	LCDSPI_send_cmd(COLMOD);
+	delay_ms(10);
+
+	//  4: Frame rate control, 3 args
+	LCDSPI_send_cmd(FRMCTR1);
+	LCDSPI_send_data(0x00);	//     fastest refresh
+	LCDSPI_send_data(0x06); //     6 lines front porch
+	LCDSPI_send_data(0x03); //     3 lines back porch
+	delay_ms(10);
+
+	// 5: Mem access ctl (directions), 1 arg
+	LCDSPI_send_cmd(MADCTL);
+
+	//  6: Display settings #5, 2 args
+	LCDSPI_send_cmd(DISSET5);
+	LCDSPI_send_data(0x15); //     1 clk cycle nonoverlap, 2 cycle gate
+                            //     rise, 3 cycle osc equalize
+	LCDSPI_send_data(0x02); //     Fix on VTL
+
+	//  7: Display inversion control, 1 arg
+	LCDSPI_send_cmd(INVCTR);
+	LCDSPI_send_data(0x00); // Line Inversion
+
+	//  8: Power control 1, default args
+	LCDSPI_send_cmd(PWCTR1);
+	delay_ms(10);
+
+	//  9: Power control 2, default arg
+	LCDSPI_send_cmd(PWCTR2);
+	delay_ms(10);
+
+	// 10: Power control 3, 2 args
+	LCDSPI_send_cmd(PWCTR3);
+	LCDSPI_send_data(0x01); //     Opamp current small
+	LCDSPI_send_data(0x02); //     Boost frequency
+}
+
+
+void LCDSPI_send_cmd(uint8_t data){
+	SPI_Transmit(&spi, data); // Software reset
+}
+
+void LCDSPI_send_data(uint8_t data){
+	GPIO_WriteToOutPutPin(DC.pGPIOx, 8, High);
+	SPI_Transmit(&spi, data); // Software reset
+	GPIO_WriteToOutPutPin(DC.pGPIOx, 8, Low);
+}
+

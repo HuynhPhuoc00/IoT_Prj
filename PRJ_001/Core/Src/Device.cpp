@@ -36,7 +36,7 @@ Device::Device(std::string name){
 	}
 //	start_dht();
 //	Read_DHT();
-	Config_Pin();
+	Key_Config_Pin();
 
 }
 

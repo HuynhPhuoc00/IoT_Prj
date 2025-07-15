@@ -88,7 +88,6 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  Interrupt_Config();
 
   /* USER CODE BEGIN 2 */
 	Room LVR("Living Room");
@@ -103,30 +102,13 @@ int main(void)
 //	BR.TurnOnLed(Room::em_Led3);
 
   /* USER CODE END 2 */
-//	GPIOD_PCLK_EN;
-//
-//	GPIO_Handle_t LED;
-//	LED.pGPIOx = GPIOD;
-//	LED.GPIO_Pin_Config.GPIO_PinNumber = PIN_NUM_12 | PIN_NUM_13 | PIN_NUM_14 | PIN_NUM_15;
-//	LED.GPIO_Pin_Config.GPIO_PinMode = GPIO_MODER_OUTPUT;
-//	LED.GPIO_Pin_Config.GPIO_PinOPType = GPIO_OTYPER_PP;
-//	LED.GPIO_Pin_Config.GPIO_PinSpeed = GPIO_OSPEEDR_LOW;
-//	LED.GPIO_Pin_Config.GPIO_PinPuPdControl = GPIO_PUPDR_NOPUPD;
-//	GPIO_Init(&LED);
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-//	  GPIO_ToggleOutputPin(LED.pGPIOx, 12);
-//	  GPIO_ToggleOutputPin(LED.pGPIOx, 13);
-//	  GPIO_ToggleOutputPin(LED.pGPIOx, 14);
-//	  GPIO_ToggleOutputPin(LED.pGPIOx, 15);
-//	  delay_ms(200);
-		if (Read_int_line(0)){
-			LVR.TurnOnLed(Room::em_Led1);
-			delay_ms(1000);
-		}
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
