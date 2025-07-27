@@ -173,7 +173,7 @@ void GPIO_Denit(GPIO_RegDef_t *pGPIOx);
 uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIO, uint8_t GPIO_PinNumber);
 uint16_t GPIO_ReadFromInpurPort(GPIO_RegDef_t *pGPIOx);
 void GPIO_WriteToOutPutPin(GPIO_RegDef_t *pGPIOx, uint8_t GPIO_PinNumber, uint8_t Status);
-void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t Value);
+void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint32_t Value);
 void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx,uint8_t GPIO_PinNumber);
 
 

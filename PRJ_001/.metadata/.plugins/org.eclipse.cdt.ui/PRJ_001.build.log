@@ -1,0 +1,10 @@
+19:55:52 **** Incremental Build of configuration Debug for project PRJ_001 ****
+make -j20 all 
+arm-none-eabi-size  PRJ_001.elf 
+   text	   data	    bss	    dec	    hex	filename
+   5988	     12	   1572	   7572	   1d94	PRJ_001.elf
+Finished building: default.size.stdout
+ 
+
+19:55:52 Build Finished. 0 errors, 0 warnings. (took 83ms)
+

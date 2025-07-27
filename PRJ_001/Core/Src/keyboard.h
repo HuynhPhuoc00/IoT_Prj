@@ -12,6 +12,7 @@
 extern "C" {
 #endif
 
+// KeyBoard
 #include "stm32f411.h"
 
 extern GPIO_Handle_t Key_Pin;
@@ -51,6 +52,53 @@ typedef enum{
 
 void Key_Config_Pin();
 char ReadKey();
+#define Reset_Row()\
+		do{\
+			GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R1, Low);\
+			GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R2, Low);\
+			GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R3, Low);\
+			GPIO_WriteToOutPutPin(Key_Pin_R.pGPIOx, R4, Low);\
+		}while (0)
+
+
+// Interrupt
+#define PDxPin 	0x3
+
+#define SYSCFG_BASEADDR		0x40013800u
+#define EXTI_BASEADDR		0x40013C00u
+
+typedef struct{
+	vo uint32_t MEMRMP;
+	vo uint32_t PMC;
+	vo uint32_t EXTICR1;
+	vo uint32_t EXTICR2;
+	vo uint32_t EXTICR3;
+	vo uint32_t EXTICR4;
+	vo uint32_t RESERVED[2];
+	vo uint32_t CMPCR;
+}Syscfg_Reg_Def_t;
+
+#define SYSCFG ((Syscfg_Reg_Def_t *)SYSCFG_BASEADDR)
+
+typedef struct{
+	vo uint32_t IMR;
+	vo uint32_t EMR;
+	vo uint32_t RTSR;
+	vo uint32_t FTSR;
+	vo uint32_t SWIER;
+	vo uint32_t PR;
+}Exti_Reg_Def_t;
+
+#define EXTI ((Exti_Reg_Def_t *)EXTI_BASEADDR)
+
+void Interrupt_Config();
+void EXTI0_IRQHandler();
+void EXTI1_IRQHandler();
+void EXTI2_IRQHandler();
+void EXTI3_IRQHandler();
+void EXTI4_IRQHandler();
+void EXTI9_5_IRQHandler();
+
 #ifdef __cplusplus
 }
 #endif

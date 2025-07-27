@@ -87,8 +87,8 @@ all: main-build
 main-build: PRJ_001.elf secondary-outputs
 
 # Tool invocations
-PRJ_001.elf PRJ_001.map: $(OBJS) $(USER_OBJS) C:\Users\Administrator\Documents\IoT_Prj\PRJ_001\STM32F401VEHX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "PRJ_001.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Administrator\Documents\IoT_Prj\PRJ_001\STM32F401VEHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PRJ_001.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+PRJ_001.elf PRJ_001.map: $(OBJS) $(USER_OBJS) D:\DOC\IoT_Prj\PRJ_001\STM32F401VEHX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "PRJ_001.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\DOC\IoT_Prj\PRJ_001\STM32F401VEHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="PRJ_001.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

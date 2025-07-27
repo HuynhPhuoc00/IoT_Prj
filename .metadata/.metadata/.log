@@ -1066,3 +1066,73 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-07-15 19:44:21.617
 !MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-07-18 15:01:39.869 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-07-18 15:01:50.527
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-07-18 15:01:50.529
+!MESSAGE Log4j2 initialized with config file C:\Users\Administrator\Documents\IoT_Prj\.metadata\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-07-18 15:01:58.269
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.core.jobs 2 2 2025-07-18 15:02:01.827
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.ui.internal.Workbench$39 RUNNING
+	 at java.desktop/javax.swing.text.GapContent.createPosition(GapContent.java:246)
+	 at java.desktop/javax.swing.text.AbstractDocument.createPosition(AbstractDocument.java:862)
+	 at java.desktop/javax.swing.text.AbstractDocument$LeafElement.<init>(AbstractDocument.java:2551)
+	 at java.desktop/javax.swing.text.html.HTMLDocument$RunElement.<init>(HTMLDocument.java:4406)
+	 at java.desktop/javax.swing.text.html.HTMLDocument.createDefaultRoot(HTMLDocument.java:608)
+	 at java.desktop/javax.swing.text.DefaultStyledDocument.<init>(DefaultStyledDocument.java:87)
+	 at java.desktop/javax.swing.text.html.HTMLDocument.<init>(HTMLDocument.java:308)
+	 at java.desktop/javax.swing.text.html.HTMLDocument.<init>(HTMLDocument.java:296)
+	 at java.desktop/javax.swing.plaf.basic.BasicHTML$BasicDocument.<init>(BasicHTML.java:422)
+	 at java.desktop/javax.swing.plaf.basic.BasicHTML$BasicEditorKit.createDefaultDocument(BasicHTML.java:358)
+	 at java.desktop/javax.swing.plaf.basic.BasicHTML.createHTMLView(BasicHTML.java:65)
+	 at java.desktop/javax.swing.plaf.basic.BasicHTML.updateRenderer(BasicHTML.java:225)
+	 at java.desktop/javax.swing.plaf.basic.BasicLabelUI.propertyChange(BasicLabelUI.java:493)
+	 at java.desktop/java.beans.PropertyChangeSupport.fire(PropertyChangeSupport.java:343)
+	 at java.desktop/java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:335)
+	 at java.desktop/java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:268)
+	 at java.desktop/java.awt.Component.firePropertyChange(Component.java:8717)
+	 at java.desktop/java.awt.Component.setForeground(Component.java:1829)
+	 at java.desktop/javax.swing.JComponent.setForeground(JComponent.java:2780)
+	 at com.st.microxplorer.maingui.HomeProjectLinePanel.<init>(HomeProjectLinePanel.java:67)
+	 at com.st.microxplorer.maingui.HomeProjectPanel.updateOpenedProjectsList(HomeProjectPanel.java:90)
+	 at com.st.microxplorer.maingui.HomeProjectPanel.<init>(HomeProjectPanel.java:73)
+	 at com.st.microxplorer.maingui.HomePanel.InitStartupPanel(HomePanel.java:116)
+	 at com.st.microxplorer.maingui.HomePanel.<init>(HomePanel.java:81)
+	 at com.st.microxplorer.maingui.MainPanel.initialization(MainPanel.java:398)
+	 at com.st.microxplorer.maingui.AppletMainFrameCubeIde.init(AppletMainFrameCubeIde.java:242)
+	 at com.st.stm32cube.common.mx.core.CubeMxInstance.<init>(CubeMxInstance.java:117)
+	 at com.st.stm32cube.common.mx.core.CubeMxInstance.getInstance(CubeMxInstance.java:91)
+	 at com.st.stm32cube.common.mx.userauth.UserAuthAdapter.<init>(UserAuthAdapter.java:25)
+	 at com.st.stm32cube.common.mx.userauth.UserAuthProvider.getUserAuthAdapter(UserAuthProvider.java:16)
+	 at com.st.stm32cube.common.ecosystemintegration.ui.core.MCUEcoSystemIntegrationUiHelper.getUserAuth(MCUEcoSystemIntegrationUiHelper.java:100)
+	 at com.st.stm32cube.ide.mcu.userauth.UserAuthStartup.earlyStartup(UserAuthStartup.java:32)
+	 at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:79)
+	 at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:55)
+	 at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	 at org.eclipse.ui.internal.Workbench$39.run(Workbench.java:2733)
+	 at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SESSION 2025-07-18 15:08:00.692 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-07-18 15:08:08.828
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-07-18 15:08:08.830
+!MESSAGE Log4j2 initialized with config file C:\Users\Administrator\Documents\IoT_Prj\.metadata\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-07-18 15:08:15.815
+!MESSAGE Started RMI Server, listening on port 41337
