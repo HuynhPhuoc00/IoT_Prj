@@ -1,5 +1,0 @@
-../Core/Src/dht11.c:13:13:IO_Write	16	static
-../Core/Src/dht11.c:29:9:start_dht	24	static
-../Core/Src/dht11.c:42:9:CheckResponse	24	static
-../Core/Src/dht11.c:59:9:Read_DHT	64	static
-../Core/Src/dht11.c:95:9:CheckSum	24	static

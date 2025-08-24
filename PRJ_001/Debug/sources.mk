@@ -41,5 +41,8 @@ CPP_DEPS :=
 SUBDIRS := \
 Core/Src \
 Core/Startup \
+Drivers/74HC \
+Drivers/I2C \
+Drivers/STM32 \
 Drivers/STM32F4xx_HAL_Driver/Src \
 

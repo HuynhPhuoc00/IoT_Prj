@@ -10,34 +10,22 @@
 
 
 Device::Device(std::string name){
-	if (name.compare("Living Room") == 0){
-		id = em_LV_R;
-		id_74HC[0] = DS0;	// For led
-		id_74HC[1] = DS3;	// For LCD
-	}
-	else if (name.compare("Kitchen Room") == 0){
-		id = em_KC_R;
-		id_74HC[0] = DS1;
-	}
 
-	else if (name.compare("Bed Room") == 0){
-		id = em_B_R;
-		id_74HC[0] = DS2;
-	}
+//	Write_data(0x1, DS3, MSB);
+//	Write_data(0x00000100, DS3, LSB);
+//	Write_data(0x00001000, DS3, LSB);
+//	Write_data(0x10000000, DS3, LSB);
 
-	// For shift IC
-	for (uint8_t i = 0; i < sizeof(id_74HC); i++){
-		init_74HC595(id_74HC[i]);
-	}
-	// For LCD
-	if (id_74HC[1] == DS3){
-//		lcd_init();
-//		i2c_lcd_init();
-	}
+//	lcd_init();
+//	Key_Config_Pin();
 //	start_dht();
 //	Read_DHT();
-	Key_Config_Pin();
 
+
+
+	/* Busy loop for initialization, because the main loop does not work without
+	 * a sensor.
+	 */
 }
 
 Device::~Device() {
@@ -49,11 +37,11 @@ Device::~Device() {
 }
 
 void Device::TurnOnLed(uint8_t data){
-	Write_data(data, id_74HC[0], MSB);
+//	Write_data(data, id_74HC[0], MSB);
 }
 
 void Device::TurnOffLed(uint8_t data){
-	Write_data((data >> data) & 0x0 , id, MSB);
+//	Write_data((data >> data) & 0x0 , id, MSB);
 }
 
 void Device::ShowDisplay(char *data, int row, int col){

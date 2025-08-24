@@ -10,11 +10,13 @@
 
 #include <stdint.h>
 #include <string>
-#include "i2c_lcd2.h"
-#include "74HC595.h"
-#include "lcd.h"
-#include "dht11.h"
-#include "keyboard.h"
+//#include "i2c_lcd2.h"
+
+#include "../../Drivers/74HC/74HC595.h"
+//#include "lcd.h"
+//#include "dht11.h"
+//#include "keyboard.h"
+//#include "sht3x.h"
 
 enum Room_ID{
 	em_LV_R = 2,
@@ -28,18 +30,23 @@ private:
 	uint8_t id_74HC[5];
 public:
 	enum emDevice{
-		em_Led1 = 0b10000000,
-		em_Led2 = 0b01000000,
-		em_Led3 = 0b00100000,
-		em_Fan1 = 0b00010000,
-		em_Fan2 = 0b00001000
+		em_Led0 = 0,
+		em_Led1 = 1,
+		em_Led2 = 2,
+		em_Led3 = 3,
+		em_Led4 = 4,
+		em_Led5 = 5,
+		em_Led6 = 6,
+		em_Led7 = 7,
 	};
 	Device(std::string name);
 	~Device();
 	void TurnOnLed(uint8_t data);
 	void TurnOffLed(uint8_t data);
 	void TurnOnFan(uint8_t data);
-	void ShowDisplay(char *data, int row, int col);
+	void TurnOffFan(uint8_t data);
+	void ShowDisplay(uint8_t *data, int row, int col);
+	void ReadSensor(char *name);
 
 };
 

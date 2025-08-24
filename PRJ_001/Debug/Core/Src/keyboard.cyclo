@@ -1,7 +1,0 @@
-../Drivers/CMSIS/Include/core_cm4.h:1684:22:__NVIC_EnableIRQ	2
-../Drivers/CMSIS/Include/core_cm4.h:1814:22:__NVIC_SetPriority	2
-../Core/Src/keyboard.c:22:6:Key_Config_Pin	1
-../Core/Src/keyboard.c:42:6:ReadKey	9
-../Core/Src/keyboard.c:103:6:Interrupt_Config	2
-../Core/Src/keyboard.c:129:6:EXTI4_IRQHandler	2
-../Core/Src/keyboard.c:136:6:EXTI9_5_IRQHandler	4
