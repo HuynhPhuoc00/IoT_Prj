@@ -18,12 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
-#include "../../Drivers/STM32/stm32f411.h"
 //#include "I2C_u.h"
 //#include "GPIO.h"
-#include "Room.h"
-
+#include "stm32f411.h"
+#include "74hc.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -65,13 +63,7 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
-#include "../../Drivers/STM32/stm32f411.h"
-//USART_Handle_t usart;
-//void USART_Config(){
-//	usart.pUSARTx = USART2;
-//	usart.USART_Config.USART_Baud = USART_STD_BAUD_9600;
-//	USART_Init(&usart);
-//}
+
 int main(void)
 {
 
@@ -89,7 +81,7 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
-//  USART_Config();
+
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -97,10 +89,6 @@ int main(void)
   /* Initialize all configured peripherals */
 
   /* USER CODE BEGIN 2 */
-	Room LVR("Living Room");
-	Room KTR("Kitchen Room");
-	Room BR("Bed Room");
-//	GPIOA_PCLK_EN;
 
 //	LVR.TurnOnLed(Room::em_Led2);
 //	delay_ms(1000);
@@ -108,16 +96,15 @@ int main(void)
 //	delay_ms(1000);
 //	KTR.TurnOnLed(Room::em_Led2);
 //	BR.TurnOnLed(Room::em_Led3);
-//	i2c_lcd_init();
-//	start_dht();
-//	Read_DHT();
+
   /* USER CODE END 2 */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  sr_init();
   while (1)
   {
     /* USER CODE END WHILE */
-
+//	  sr_init();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
