@@ -5,9 +5,8 @@
  *      Author: HuynhPhuoc
  */
 
+#include "stm32f411.h"
 #include "I2C_u.h"
-
-#include "../../Drivers/STM32/stm32f411.h"
 
 /*
     SCL
@@ -153,9 +152,9 @@ void I2C_Start(I2C_RegDef_t *pI2Cx){
     while(!(I2C_GetFlagStatus(pI2Cx,I2C_FLAG_SB)));
 }
 
-I2C_Error_t I2C_Address(I2C_Handle_t *I2C_Handle){
+I2C_Error_t I2C_Address(I2C_Handle_t *I2C_Handle, uint16_t addr){
 	// 3. Send the addr of the slave with r/w bit set to w(0) (total 8 bit)
-	I2C_Handle->pI2Cx->DR = I2C_Handle->I2C_Congif.I2C_DeviceAddr << 1;
+	I2C_Handle->pI2Cx->DR = addr << 1;
 	// 4. Confirm that addr phase is completed by checking the Addr flas in SR1
 	uint32_t TimeOut = I2C_Handle->I2C_Congif.TimeOut;
 	while(!(I2C_GetFlagStatus(I2C_Handle->pI2Cx,I2C_FLAG_ADDR))){
@@ -181,12 +180,12 @@ void I2C_MasterSend_Data(I2C_RegDef_t *pI2Cx, uint8_t data){
 
 }
 
-I2C_Error_t I2C_MasterSend_Multi_Data(I2C_Handle_t *I2C_Handle, uint16_t *pTxbuffer, uint32_t len){
+I2C_Error_t I2C_MasterSend_Multi_Data(I2C_Handle_t *I2C_Handle, uint16_t addr, uint8_t *pTxbuffer, uint32_t len){
 	uint32_t TimeOut_TxE = I2C_Handle->I2C_Congif.TimeOut;
 	uint32_t TimeOut_BTF = I2C_Handle->I2C_Congif.TimeOut;
 
 	I2C_Start(I2C_Handle->pI2Cx);
-	i2c_error = I2C_Address(I2C_Handle);
+	i2c_error = I2C_Address(I2C_Handle, addr);
 	if(i2c_error.errorFlags == I2C_ERR_ADDR){
 #ifdef I2C_Debug
 		lcd_put_cur(2, 1);
@@ -237,55 +236,84 @@ I2C_Error_t I2C_MasterSend_Multi_Data(I2C_Handle_t *I2C_Handle, uint16_t *pTxbuf
     return i2c_error;
 }
 
-void I2C_MasterRead_Data(I2C_RegDef_t *pI2Cx, uint8_t Address, uint8_t *buffer,uint8_t size){
-	int remaining = size;
-	if (size == 1){
-		// Write the slave Address, and wait for the ADDR bit (bit 1 in SR1) to be set
-		pI2Cx->DR = (Address << 1) + 0x1;
-		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_ADDR)));
+void I2C_MasterRead_Data(I2C_Handle_t *I2C_Handle, uint8_t addr, uint8_t *buffer, uint8_t size) {
+    if (size == 0) return;
 
-		// Clear the ADDR bit by reading the SR1 and SR2 Registers
-		pI2Cx->CR1 &= ~(1 << 10);
-		I2C_ClearAddrFlag(pI2Cx);
-		pI2Cx->CR1 &= ~(1 << 9); // Stop I2C
+    // 1. START + gửi địa chỉ Slave (Read)
+    I2C_Start(I2C_Handle->pI2Cx);
+    I2C_Handle->pI2Cx->DR = (addr << 1) | 0x01;
+    while (!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_ADDR)));
+    I2C_ClearAddrFlag(I2C_Handle->pI2Cx);
 
-		// Wait for the RXNE (Receive buffer not empty) bit to set
-		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_RxNE)));
+    if (size == 1) {
+        I2C_Handle->pI2Cx->CR1 &= ~(1 << 10); // ACK = 0
+        I2C_Handle->pI2Cx->CR1 |= (1 << 9);   // STOP
+        while (!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_RxNE)));
+        buffer[0] = I2C_Handle->pI2Cx->DR;
+    } else {
+        int i;
+        for (i = 0; i < size - 2; i++) {
+            while (!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_RxNE)));
+            buffer[i] = I2C_Handle->pI2Cx->DR;
+        }
 
-		// Read the data from the DR
-		*buffer = pI2Cx->DR;
-	}
-	else{
-		pI2Cx->DR = (Address << 1) + 0x1;
-		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_ADDR)));
+        while (!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_RxNE)));
+        I2C_Handle->pI2Cx->CR1 &= ~(1 << 10); // ACK = 0
+        I2C_Handle->pI2Cx->CR1 |= (1 << 9);   // STOP
+        buffer[i++] = I2C_Handle->pI2Cx->DR;
 
-		// Clear the ADDR bit by reading the SR1 and SR2 Registers
-		I2C_ClearAddrFlag(pI2Cx);
-
-		while(remaining > 2){
-			// Wait for the RXNE (Receive buffer not empty) bit to set
-			while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_RxNE)));
-			buffer[size-remaining] = pI2Cx->DR;
-			pI2Cx->CR1 |= (1 << 10);
-			remaining--;
-		}
-
-		// Read the SECOND LAST BYTE
-		// Wait for the RXNE (Receive buffer not empty) bit to set
-		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_RxNE)));
-
-		I2C1->CR1 &= ~(1<<10);  // clear the ACK bit
-
-		I2C1->CR1 |= (1<<9);  // Stop I2C
-
-		remaining--;
-
-		// Read the Last BYTE
-		// Wait for the RXNE (Receive buffer not empty) bit to set
-		while(!(I2C_GetFlagStatus(pI2Cx, I2C_FLAG_RxNE)));
-		buffer[size-remaining] = pI2Cx->DR;  // copy the data into the buffer
-	}
+        while (!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_RxNE)));
+        buffer[i] = I2C_Handle->pI2Cx->DR;
+    }
 }
+
+I2C_Error_t I2C_MasterRead_Mem(I2C_Handle_t *I2C_Handle,
+                               uint16_t DevAddr,
+                               uint16_t MemAddr,
+                               uint8_t MemAddrSize,
+                               uint8_t *pData,
+                               uint16_t Size)
+{
+    I2C_Error_t i2c_error;
+    uint32_t timeout;
+
+    // 1. START + SlaveAddr (Write)
+    I2C_Start(I2C_Handle->pI2Cx);
+    i2c_error = I2C_Address(I2C_Handle, DevAddr & 0xFE); // Write
+    if (i2c_error.errorFlags != I2C_ERR_NONE) return i2c_error;
+
+    // 2. Gửi MemAddr (command)
+    if (MemAddrSize == 2) {
+        while (!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_TxE)));
+        I2C_Handle->pI2Cx->DR = (uint8_t)(MemAddr >> 8); // MSB
+
+        while (!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_TxE)));
+        I2C_Handle->pI2Cx->DR = (uint8_t)(MemAddr & 0xFF); // LSB
+    } else {
+        while (!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_TxE)));
+        I2C_Handle->pI2Cx->DR = (uint8_t)MemAddr;
+    }
+
+    // 3. REPEATED START + SlaveAddr (Read)
+    I2C_Start(I2C_Handle->pI2Cx);
+    i2c_error = I2C_Address(I2C_Handle, DevAddr | 0x01); // Read
+    if (i2c_error.errorFlags != I2C_ERR_NONE) return i2c_error;
+
+    // 4. Đọc dữ liệu
+    for (int i = 0; i < Size; i++) {
+        if (i == (Size - 1)) {
+            // byte cuối
+            I2C_Handle->pI2Cx->CR1 &= ~(1 << 10); // ACK = 0
+            I2C_Handle->pI2Cx->CR1 |= (1 << 9);   // STOP
+        }
+        while (!(I2C_GetFlagStatus(I2C_Handle->pI2Cx, I2C_FLAG_RxNE)));
+        pData[i] = I2C_Handle->pI2Cx->DR;
+    }
+
+    i2c_error.errorFlags = I2C_ERR_NONE;
+    return i2c_error;
+}
+
 
 void I2C_Stop(I2C_RegDef_t *pI2Cx){
 	// 8. Genarate the Stop condition and Master need not to wait for the completion of stop condition
@@ -295,6 +323,5 @@ void I2C_Stop(I2C_RegDef_t *pI2Cx){
 	// Wait until bus is no longer busy
 	while(pI2Cx->SR2 & (1 << 1));  // Wait until BUSY = 0
 }
-
 
 

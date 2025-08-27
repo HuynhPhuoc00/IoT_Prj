@@ -9,8 +9,8 @@
 #ifndef INC_STM32F411_I2C_H_
 #define INC_STM32F411_I2C_H_
 
-#include "../../Drivers/STM32/stm32f411.h"
-#include "../LCD/lcd.h"
+#include "stm32f411.h"
+#include "lcd.h"
 
 #define I2C1_BASE_ADD           0x40005400U
 #define I2C2_BASE_ADD           0x40005800U
@@ -95,7 +95,6 @@ typedef struct{
 // Configure structure for I2Cx peripheral
 typedef struct{
     uint32_t I2C_SCLSpeed;
-    uint8_t  I2C_DeviceAddr;
     uint8_t  I2C_AckControl;
     uint16_t I2C_FMDutyCyCle;
     uint32_t TimeOut;
@@ -159,12 +158,19 @@ void I2C_Init(I2C_Handle_t *pI2CHandle);
 void I2C_DeInit(void);
 
 void I2C_Start(I2C_RegDef_t *pI2Cx);
-I2C_Error_t I2C_Address(I2C_Handle_t *I2C_Handle);
+I2C_Error_t I2C_Address(I2C_Handle_t *I2C_Handle, uint16_t addr);
 void I2C_Stop(I2C_RegDef_t *pI2Cx);
 // Data Send and Receive
 void I2C_MasterSend_Data(I2C_RegDef_t *pI2Cx, uint8_t data);
-I2C_Error_t I2C_MasterSend_Multi_Data(I2C_Handle_t *I2C_Handle, uint16_t *pTxbuffer, uint32_t len);
-void I2C_MasterRead_Data(I2C_RegDef_t *pI2Cx, uint8_t Address, uint8_t *buffer, uint8_t size);
+I2C_Error_t I2C_MasterSend_Multi_Data(I2C_Handle_t *I2C_Handle, uint16_t addr, uint8_t *pTxbuffer, uint32_t len);
+void I2C_MasterRead_Data(I2C_Handle_t *I2C_Handle, uint8_t addr, uint8_t *buffer, uint8_t size);
+I2C_Error_t I2C_MasterRead_Mem(I2C_Handle_t *I2C_Handle,
+                               uint16_t DevAddr,
+                               uint16_t MemAddr,
+                               uint8_t MemAddrSize,
+                               uint8_t *pData,
+                               uint16_t Size);
+
 // IRQ Configuration and ISR hadling
 void I2C_IRQInterruptConfig(void);
 void I2C_IRQInterruptConfig(void);
